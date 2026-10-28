@@ -151,6 +151,15 @@ export default async function decorate(block) {
     });
   }
 
+  // same-page anchor links: close the mobile menu after navigating
+  if (navSections) {
+    navSections.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (!isDesktop.matches) toggleMenu(nav, navSections, false);
+      });
+    });
+  }
+
   // hamburger for mobile
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');

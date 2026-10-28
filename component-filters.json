@@ -15,7 +15,15 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "announcement-banner",
+      "pricing-cards",
+      "link-list",
+      "hero-banner",
+      "partner-promo",
+      "legal-disclaimer",
+      "cta-bar",
+      "whatsapp"
     ]
   },
   {
@@ -37,6 +45,24 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "hero-banner",
+    "components": [
+      "hero-banner-benefit"
+    ]
+  },
+  {
+    "id": "link-list",
+    "components": [
+      "link-list-item"
+    ]
+  },
+  {
+    "id": "pricing-cards",
+    "components": [
+      "pricing-card"
     ]
   }
 ]

@@ -1,0 +1,118 @@
+main > .section > .hero-banner-wrapper {
+  max-width: none;
+  padding: 0;
+  background-color: var(--vivo-navy);
+}
+
+.hero-banner {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  color: var(--background-color);
+}
+
+.hero-banner .hero-banner-content {
+  padding: 32px var(--content-padding) 40px;
+}
+
+.hero-banner .hero-banner-content > p,
+.hero-banner .hero-banner-content > h1,
+.hero-banner .hero-banner-content > h2,
+.hero-banner .hero-banner-content > h3 {
+  margin: 0;
+  color: inherit;
+}
+
+.hero-banner .hero-banner-eyebrow {
+  font-size: var(--body-font-size-s);
+  font-weight: 500;
+  line-height: 21px;
+  text-transform: uppercase;
+}
+
+.hero-banner .hero-banner-content h2 {
+  font-size: var(--heading-font-size-xl);
+  line-height: 36px;
+}
+
+.hero-banner .hero-banner-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-banner .hero-banner-benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.hero-banner .hero-banner-benefit-icon,
+.hero-banner .hero-banner-benefit-icon img {
+  display: block;
+  flex: 0 0 50px;
+  width: 50px;
+  height: 50px;
+}
+
+.hero-banner .hero-banner-benefit-text,
+.hero-banner .hero-banner-benefit-text p {
+  margin: 0;
+  font-size: var(--body-font-size-m);
+  line-height: 22px;
+}
+
+/* the campaign image is shown first and full width on mobile */
+.hero-banner .hero-banner-image {
+  order: -1;
+}
+
+.hero-banner .hero-banner-image picture,
+.hero-banner .hero-banner-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (width >= 600px) {
+  .hero-banner .hero-banner-benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 177px));
+    gap: 32px 16px;
+  }
+
+  .hero-banner .hero-banner-benefits li {
+    flex-direction: column;
+  }
+}
+
+@media (width >= 900px) {
+  .hero-banner {
+    flex-direction: row;
+    justify-content: space-between;
+    min-height: 450px;
+    padding: 0 var(--content-padding);
+  }
+
+  .hero-banner .hero-banner-content {
+    flex: 0 1 660px;
+    padding: 40px 0;
+  }
+
+  .hero-banner .hero-banner-image {
+    flex: 0 1 543px;
+    order: 0;
+    align-self: flex-end;
+  }
+
+  .hero-banner .hero-banner-image img {
+    max-height: 450px;
+    object-fit: contain;
+    object-position: bottom right;
+  }
+}

@@ -83,6 +83,21 @@
       "id": "blocks",
       "components": [
         {
+          "title": "Announcement Banner",
+          "id": "announcement-banner",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Announcement Banner",
+                  "model": "announcement-banner"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Cards",
           "id": "cards",
           "plugins": {
@@ -128,6 +143,22 @@
           }
         },
         {
+          "title": "CTA Bar",
+          "id": "cta-bar",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "CTA Bar",
+                  "model": "cta-bar",
+                  "label": "Assinar agora"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Fragment",
           "id": "fragment",
           "plugins": {
@@ -143,6 +174,38 @@
           }
         },
         {
+          "title": "Hero Banner",
+          "id": "hero-banner",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Hero Banner",
+                  "model": "hero-banner",
+                  "filter": "hero-banner",
+                  "heading_titleType": "h2"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Benefit",
+          "id": "hero-banner-benefit",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Benefit",
+                  "model": "hero-banner-benefit"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Hero",
           "id": "hero",
           "plugins": {
@@ -152,6 +215,118 @@
                 "template": {
                   "name": "Hero",
                   "model": "hero"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Legal Disclaimer",
+          "id": "legal-disclaimer",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Legal Disclaimer",
+                  "model": "legal-disclaimer"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Link List",
+          "id": "link-list",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Link List",
+                  "filter": "link-list"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Link",
+          "id": "link-list-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Link",
+                  "model": "link-list-item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Partner Promo Banner",
+          "id": "partner-promo",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Partner Promo",
+                  "model": "partner-promo"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Pricing Cards",
+          "id": "pricing-cards",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Pricing Cards",
+                  "model": "pricing-cards",
+                  "filter": "pricing-cards",
+                  "heading_titleType": "h1",
+                  "labels_details": "Mais detalhes",
+                  "labels_appsHeading": "Serviços digitais inclusos:",
+                  "labels_appsLink": "Conferir apps",
+                  "labels_appsDialog": "Apps inclusos nos planos de internet Vivo Fibra Gamer"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Pricing Card",
+          "id": "pricing-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Pricing Card",
+                  "model": "pricing-card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "WhatsApp Button",
+          "id": "whatsapp",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "WhatsApp",
+                  "model": "whatsapp",
+                  "label": "Fale conosco pelo WhatsApp"
                 }
               }
             }

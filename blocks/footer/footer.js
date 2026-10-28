@@ -16,5 +16,10 @@ export default async function decorate(block) {
   const footer = document.createElement('div');
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
+  // images that stand on their own (e.g. the 5G logo) are shown aside the footer text
+  footer.querySelectorAll('.default-content-wrapper > p').forEach((p) => {
+    if (p.querySelector('picture') && !p.textContent.trim()) p.classList.add('footer-logo');
+  });
+
   block.append(footer);
 }

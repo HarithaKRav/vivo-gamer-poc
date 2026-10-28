@@ -9,6 +9,7 @@ import {
   loadSection,
   loadSections,
   loadCSS,
+  toClassName,
 } from './aem.js';
 
 /**
@@ -110,6 +111,16 @@ export function decorateButtons(main) {
 }
 
 /**
+ * Applies the authored section anchor IDs, so sections can be targeted by same-page links.
+ * @param {Element} main The container element
+ */
+function decorateSectionAnchors(main) {
+  main.querySelectorAll(':scope > .section[data-anchor]').forEach((section) => {
+    section.id = toClassName(section.dataset.anchor);
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -118,6 +129,7 @@ export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
+  decorateSectionAnchors(main);
   decorateBlocks(main);
   decorateButtons(main);
 }
@@ -127,7 +139,7 @@ export function decorateMain(main) {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
-  document.documentElement.lang = 'en';
+  document.documentElement.lang = 'pt-BR';
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
