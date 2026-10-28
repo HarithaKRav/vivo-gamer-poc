@@ -23,10 +23,18 @@ export default function decorate(block) {
   const list = document.createElement('ul');
   [...block.children].forEach((row) => {
     const link = row.querySelector('a');
-    if (!link) return;
+    // in the Universal Editor, keep items without a link selectable so authors can complete them
+    if (!link && !row.hasAttribute('data-aue-resource')) return;
 
     const li = document.createElement('li');
     moveInstrumentation(row, li);
+
+    if (!link) {
+      li.className = 'link-list-placeholder';
+      li.textContent = row.textContent.trim() || 'New link: set the link and text in the properties panel';
+      list.append(li);
+      return;
+    }
 
     link.className = 'link-list-link';
     if (opensInNewTab(link)) {

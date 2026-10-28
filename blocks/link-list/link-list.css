@@ -35,3 +35,16 @@ main > .section > .link-list-wrapper:not(:first-child) {
 .link-list .icon {
   flex: 0 0 24px;
 }
+
+/* authoring only: incomplete items and an empty list stay visible and selectable */
+.link-list .link-list-placeholder {
+  padding: 30px 0;
+  color: var(--text-secondary-color);
+  font-size: var(--body-font-size-s);
+  font-style: italic;
+}
+
+.link-list[data-aue-resource] ul:empty {
+  min-height: 48px;
+  border: 1px dashed var(--border-color);
+}
