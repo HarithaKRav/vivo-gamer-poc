@@ -310,7 +310,8 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "name": "Pricing Card",
-                  "model": "pricing-card"
+                  "model": "pricing-card",
+                  "eyebrow": "Vivo Fibra Gamer"
                 }
               }
             }

@@ -506,6 +506,14 @@
       {
         "component": "text",
         "valueType": "string",
+        "name": "eyebrow",
+        "label": "Card Title",
+        "description": "Shown at the top of the card, e.g. Vivo Fibra Gamer",
+        "value": "Vivo Fibra Gamer"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
         "name": "plan_speed",
         "label": "Speed",
         "description": "e.g. 700 Mega",
@@ -526,14 +534,6 @@
         "collapsible": true,
         "multi": true,
         "fields": [
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "planName",
-            "label": "Card Title (when selected)",
-            "description": "e.g. Vivo Fibra Gamer",
-            "required": true
-          },
           {
             "component": "text",
             "valueType": "string",
