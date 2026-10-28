@@ -106,39 +106,67 @@ function buildHeading(row) {
   return heading;
 }
 
-function buildDialog(id, title, apps) {
-  const dialog = createElement('dialog', 'pricing-cards-dialog');
-  dialog.setAttribute('aria-labelledby', `${id}-title`);
+function buildDrawer(id, title, apps) {
+  const drawer = createElement('dialog', 'pricing-cards-drawer');
+  drawer.setAttribute('aria-labelledby', `${id}-title`);
+  const content = createElement('div', 'pricing-cards-drawer-content');
 
-  const close = createElement('button', 'pricing-cards-dialog-close');
+  // slide the drawer out before closing it (skipped when animations are disabled)
+  const closeDrawer = () => {
+    if (!drawer.open || drawer.classList.contains('is-closing')) return;
+    if (getComputedStyle(drawer).animationName === 'none') {
+      drawer.close();
+      return;
+    }
+    drawer.classList.add('is-closing');
+    drawer.addEventListener('animationend', () => {
+      drawer.classList.remove('is-closing');
+      drawer.close();
+    }, { once: true });
+  };
+
+  const close = createElement('button', 'pricing-cards-drawer-close');
   close.type = 'button';
   close.setAttribute('aria-label', 'Fechar');
   close.append(createIcon('close'));
-  close.addEventListener('click', () => dialog.close());
+  close.addEventListener('click', closeDrawer);
 
-  const heading = createElement('h2', 'pricing-cards-dialog-title', title);
+  const heading = createElement('h2', 'pricing-cards-drawer-title', title);
   heading.id = `${id}-title`;
 
-  const list = createElement('ul', 'pricing-cards-dialog-apps');
+  const list = createElement('ul', 'pricing-cards-drawer-apps');
   apps.forEach(({ picture, name, description }) => {
     const li = createElement('li');
     if (picture) li.append(picture);
-    const text = createElement('div');
-    if (name) text.append(createElement('p', 'pricing-cards-dialog-app-name', name));
-    if (description) text.append(createElement('p', 'pricing-cards-dialog-app-description', description));
+    const text = createElement('div', 'pricing-cards-drawer-app-text');
+    if (name) text.append(createElement('p', 'pricing-cards-drawer-app-name', name));
+    if (description) text.append(createElement('p', 'pricing-cards-drawer-app-description', description));
     li.append(text);
     list.append(li);
   });
 
-  dialog.append(close, heading, list);
-  // close when clicking the backdrop
-  dialog.addEventListener('click', (e) => {
-    if (e.target === dialog) dialog.close();
+  content.append(close, heading, list);
+  drawer.append(content);
+
+  // close on backdrop click and on Escape, keep the page from scrolling while open
+  drawer.addEventListener('click', (e) => {
+    if (e.target === drawer) closeDrawer();
   });
-  return dialog;
+  drawer.addEventListener('cancel', (e) => {
+    e.preventDefault();
+    closeDrawer();
+  });
+  drawer.addEventListener('close', () => {
+    document.body.style.overflow = '';
+  });
+  const openDrawer = () => {
+    document.body.style.overflow = 'hidden';
+    drawer.showModal();
+  };
+  return { drawer, openDrawer };
 }
 
-function buildDetails(id, labels, apps, dialog) {
+function buildDetails(id, labels, apps, openDrawer) {
   const details = createElement('div', 'pricing-card-details');
   details.id = `${id}-details`;
   details.hidden = true;
@@ -159,7 +187,7 @@ function buildDetails(id, labels, apps, dialog) {
   const open = createElement('button', 'pricing-card-apps-link', labels.appsLink);
   open.type = 'button';
   open.setAttribute('aria-haspopup', 'dialog');
-  open.addEventListener('click', () => dialog.showModal());
+  open.addEventListener('click', openDrawer);
   details.append(open);
 
   return details;
@@ -226,8 +254,8 @@ function buildCard(row, labels, id) {
   card.append(body);
 
   if (apps.length) {
-    const dialog = buildDialog(id, labels.appsDialog, apps);
-    const details = buildDetails(id, labels, apps, dialog);
+    const { drawer, openDrawer } = buildDrawer(id, labels.appsDialog, apps);
+    const details = buildDetails(id, labels, apps, openDrawer);
 
     const toggle = createElement('button', 'pricing-card-toggle');
     toggle.type = 'button';
@@ -241,7 +269,7 @@ function buildCard(row, labels, id) {
     });
 
     body.append(toggle);
-    card.append(details, dialog);
+    card.append(details, drawer);
   }
 
   return card;
