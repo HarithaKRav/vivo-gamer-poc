@@ -63,8 +63,9 @@ function getTexts(elements) {
 
 function parseOption(elements) {
   const link = elements.map(getLink).find(Boolean);
-  const [label = '', price = '', details = ''] = getTexts(elements);
+  const [planName = '', label = '', price = '', details = ''] = getTexts(elements);
   return {
+    planName,
     label,
     price,
     details,
@@ -193,10 +194,7 @@ function buildDetails(id, labels, apps, openDrawer) {
 }
 
 function buildCard(row, labels, id) {
-  // cards authored before the card title field existed have no title cell
-  const cells = [...row.children];
-  const [titleCell, planCell, optionsCell, appsCell] = cells.length >= 4 ? cells : [null, ...cells];
-  const title = titleCell?.textContent.trim() || '';
+  const [planCell, optionsCell, appsCell] = [...row.children];
   const [speed = '', speedDescription = ''] = planCell ? getTexts([...planCell.children]) : [];
   const options = splitItems(optionsCell).map(parseOption).filter((o) => o.label || o.price);
   const apps = splitItems(appsCell).map(parseApp).filter((a) => a.picture || a.name);
@@ -205,7 +203,8 @@ function buildCard(row, labels, id) {
   moveInstrumentation(row, card);
 
   const body = createElement('div', 'pricing-card-body');
-  if (title) body.append(createElement('p', 'pricing-card-plan', title));
+  const plan = createElement('p', 'pricing-card-plan');
+  body.append(plan);
 
   const speedWrapper = createElement('div', 'pricing-card-speed');
   const speedText = createElement('div');
@@ -219,6 +218,7 @@ function buildCard(row, labels, id) {
   const cta = createElement('a', 'button pricing-card-cta');
 
   const selectOption = (option) => {
+    plan.textContent = option.planName;
     price.textContent = option.price;
     cta.textContent = option.ctaText || DEFAULT_LABELS.cta;
     if (option.href) cta.href = option.href;
@@ -278,7 +278,7 @@ function buildCard(row, labels, id) {
 /**
  * Pricing Cards: optional heading, shared labels, and a list of plan cards.
  * Block rows with a single cell hold the heading and the labels,
- * rows with several cells are cards (title, plan, options, apps).
+ * rows with several cells are cards (plan, options, apps).
  * @param {Element} block The block element
  */
 export default function decorate(block) {
