@@ -32,7 +32,11 @@ async function applyChanges(event) {
 
   const sanitizedContent = window.DOMPurify.sanitize(content, { USE_PROFILES: { html: true } });
   const parsedUpdate = new DOMParser().parseFromString(sanitizedContent, 'text/html');
-  const element = document.querySelector(`[data-aue-resource="${resource}"]`);
+  // look up the changed element in the page content only: on the nav and footer pages the same
+  // instrumented content is also rendered inside the header or footer
+  const main = document.querySelector('main');
+  const selector = `[data-aue-resource="${resource}"]`;
+  const element = main?.matches(selector) ? main : main?.querySelector(selector);
 
   if (element) {
     if (element.matches('main')) {

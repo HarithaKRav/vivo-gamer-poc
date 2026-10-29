@@ -15,7 +15,18 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "announcement-banner",
+      "pricing-cards",
+      "included-apps",
+      "link-list",
+      "hero-banner",
+      "partner-promo",
+      "legal-disclaimer",
+      "cta-bar",
+      "whatsapp",
+      "chat-button",
+      "spacer"
     ]
   },
   {
@@ -37,6 +48,30 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "hero-banner",
+    "components": [
+      "hero-banner-benefit"
+    ]
+  },
+  {
+    "id": "included-apps",
+    "components": [
+      "included-app"
+    ]
+  },
+  {
+    "id": "link-list",
+    "components": [
+      "link-list-item"
+    ]
+  },
+  {
+    "id": "pricing-cards",
+    "components": [
+      "pricing-card"
     ]
   }
 ]

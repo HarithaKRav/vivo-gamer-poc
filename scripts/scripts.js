@@ -9,7 +9,28 @@ import {
   loadSection,
   loadSections,
   loadCSS,
+  toClassName,
 } from './aem.js';
+
+/**
+ * The site's Content-Security-Policy requires Trusted Types (require-trusted-types-for 'script').
+ * The boilerplate assigns HTML fetched from this site (e.g. the nav and footer fragments) with
+ * innerHTML and loads scripts by URL, so a default policy lets these values through.
+ */
+function setupTrustedTypes() {
+  if (!window.trustedTypes?.createPolicy || window.trustedTypes.defaultPolicy) return;
+  try {
+    window.trustedTypes.createPolicy('default', {
+      createHTML: (html) => html,
+      createScriptURL: (url) => url,
+    });
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.warn('Trusted Types default policy could not be created', e);
+  }
+}
+
+setupTrustedTypes();
 
 /**
  * Moves all the attributes from a given elmenet to another given element.
@@ -110,6 +131,16 @@ export function decorateButtons(main) {
 }
 
 /**
+ * Applies the authored section anchor IDs, so sections can be targeted by same-page links.
+ * @param {Element} main The container element
+ */
+function decorateSectionAnchors(main) {
+  main.querySelectorAll(':scope > .section[data-anchor]').forEach((section) => {
+    section.id = toClassName(section.dataset.anchor);
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -118,6 +149,7 @@ export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
+  decorateSectionAnchors(main);
   decorateBlocks(main);
   decorateButtons(main);
 }
@@ -127,7 +159,7 @@ export function decorateMain(main) {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
-  document.documentElement.lang = 'en';
+  document.documentElement.lang = 'pt-BR';
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {

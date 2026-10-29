@@ -1,0 +1,388 @@
+import { decorateIcons } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+// number of app logos shown in the card before the "+N" counter
+const VISIBLE_APPS = 3;
+
+const DEFAULT_LABELS = {
+  details: 'Mais detalhes',
+  appsHeading: 'Serviços digitais inclusos:',
+  appsLink: 'Conferir apps',
+  appsDialog: 'Apps inclusos nos planos',
+  cta: 'Consultar',
+};
+
+let instanceCount = 0;
+
+function createElement(tag, className, text) {
+  const el = document.createElement(tag);
+  if (className) el.className = className;
+  if (text) el.textContent = text;
+  return el;
+}
+
+function createIcon(name) {
+  return createElement('span', `icon icon-${name}`);
+}
+
+function getLink(el) {
+  return el.tagName === 'A' ? el : el.querySelector('a');
+}
+
+function getTexts(elements) {
+  return elements
+    .filter((el) => !getLink(el) && !el.querySelector('picture'))
+    .map((el) => el.textContent.trim())
+    .filter(Boolean);
+}
+
+function parseOption(elements) {
+  const link = elements.map(getLink).find(Boolean);
+  const [planName = '', label = '', price = '', details = ''] = getTexts(elements);
+  return {
+    planName,
+    label,
+    price,
+    details,
+    href: link?.getAttribute('href') || '',
+    ctaText: link?.textContent.trim() || '',
+  };
+}
+
+/**
+ * Reads an Included App row: logo cell, then a cell with name and description.
+ * @param {Element} row The app row
+ */
+function parseApp(row) {
+  const [logoCell, textCell] = [...row.children];
+  const picture = logoCell?.querySelector('picture') || null;
+  const [name = '', description = ''] = textCell ? getTexts([...textCell.children]) : [];
+  return {
+    row, picture, name, description,
+  };
+}
+
+function readLabels(row) {
+  const texts = row ? getTexts([...row.firstElementChild.children]) : [];
+  const [
+    details = DEFAULT_LABELS.details,
+    appsHeading = DEFAULT_LABELS.appsHeading,
+    appsLink = DEFAULT_LABELS.appsLink,
+    appsDialog = DEFAULT_LABELS.appsDialog,
+  ] = texts;
+  return {
+    details, appsHeading, appsLink, appsDialog,
+  };
+}
+
+function buildHeading(row) {
+  const heading = createElement('div', 'pricing-cards-heading');
+  moveInstrumentation(row, heading);
+  const cell = row.firstElementChild;
+  [...cell.children].forEach((el) => {
+    if (!/^H[1-6]$/.test(el.tagName)) el.classList.add('pricing-cards-eyebrow');
+    heading.append(el);
+  });
+  return heading;
+}
+
+function buildDrawer(id, title, apps) {
+  const drawer = createElement('dialog', 'pricing-cards-drawer');
+  drawer.setAttribute('aria-labelledby', `${id}-title`);
+  const content = createElement('div', 'pricing-cards-drawer-content');
+
+  // slide the drawer out before closing it (skipped when animations are disabled)
+  const closeDrawer = () => {
+    if (!drawer.open || drawer.classList.contains('is-closing')) return;
+    if (getComputedStyle(drawer).animationName === 'none') {
+      drawer.close();
+      return;
+    }
+    drawer.classList.add('is-closing');
+    drawer.addEventListener('animationend', () => {
+      drawer.classList.remove('is-closing');
+      drawer.close();
+    }, { once: true });
+  };
+
+  const close = createElement('button', 'pricing-cards-drawer-close');
+  close.type = 'button';
+  close.setAttribute('aria-label', 'Fechar');
+  close.append(createIcon('close'));
+  close.addEventListener('click', closeDrawer);
+
+  const heading = createElement('h2', 'pricing-cards-drawer-title', title);
+  heading.id = `${id}-title`;
+
+  const list = createElement('ul', 'pricing-cards-drawer-apps');
+  apps.forEach(({ picture, name, description }) => {
+    const li = createElement('li');
+    if (picture) li.append(picture.cloneNode(true));
+    const text = createElement('div', 'pricing-cards-drawer-app-text');
+    if (name) text.append(createElement('p', 'pricing-cards-drawer-app-name', name));
+    if (description) text.append(createElement('p', 'pricing-cards-drawer-app-description', description));
+    li.append(text);
+    list.append(li);
+  });
+
+  content.append(close, heading, list);
+  drawer.append(content);
+
+  // close on backdrop click and on Escape, keep the page from scrolling while open
+  drawer.addEventListener('click', (e) => {
+    if (e.target === drawer) closeDrawer();
+  });
+  drawer.addEventListener('cancel', (e) => {
+    e.preventDefault();
+    closeDrawer();
+  });
+  drawer.addEventListener('close', () => {
+    document.body.style.overflow = '';
+  });
+  const openDrawer = () => {
+    document.body.style.overflow = 'hidden';
+    drawer.showModal();
+  };
+  return { drawer, openDrawer };
+}
+
+function buildDetails(id, labels, apps, openDrawer) {
+  const details = createElement('div', 'pricing-card-details');
+  details.id = `${id}-details`;
+  details.hidden = true;
+
+  details.append(createElement('p', 'pricing-card-apps-heading', labels.appsHeading));
+
+  const preview = createElement('div', 'pricing-card-apps-preview');
+  apps.slice(0, VISIBLE_APPS).forEach(({ picture }) => {
+    if (picture) preview.append(picture.cloneNode(true));
+  });
+  if (apps.length > VISIBLE_APPS) {
+    const more = createElement('span', 'pricing-card-apps-more', `+${apps.length - VISIBLE_APPS}`);
+    more.setAttribute('aria-label', `mais ${apps.length - VISIBLE_APPS} apps`);
+    preview.append(more);
+  }
+  details.append(preview);
+
+  const open = createElement('button', 'pricing-card-apps-link', labels.appsLink);
+  open.type = 'button';
+  open.setAttribute('aria-haspopup', 'dialog');
+  open.addEventListener('click', openDrawer);
+  details.append(open);
+
+  return details;
+}
+
+function buildCard(row, labels, id, apps) {
+  const [planCell, ...optionCells] = [...row.children];
+  const [speed = '', speedDescription = ''] = planCell ? getTexts([...planCell.children]) : [];
+  const options = optionCells
+    .map((cell) => parseOption([...cell.children]))
+    .filter((o) => o.label || o.price);
+
+  const card = createElement('li', 'pricing-card');
+  moveInstrumentation(row, card);
+
+  const body = createElement('div', 'pricing-card-body');
+  const plan = createElement('p', 'pricing-card-plan');
+  body.append(plan);
+
+  const speedWrapper = createElement('div', 'pricing-card-speed');
+  const speedText = createElement('div');
+  speedText.append(createElement('p', 'pricing-card-speed-value', speed));
+  if (speedDescription) speedText.append(createElement('p', 'pricing-card-speed-description', speedDescription));
+  speedWrapper.append(createIcon('wifi'), speedText);
+  body.append(speedWrapper);
+
+  const price = createElement('p', 'pricing-card-price');
+  price.setAttribute('aria-live', 'polite');
+  const cta = createElement('a', 'button pricing-card-cta');
+
+  const selectOption = (option) => {
+    plan.textContent = option.planName;
+    price.textContent = option.price;
+    cta.textContent = option.ctaText || DEFAULT_LABELS.cta;
+    if (option.href) cta.href = option.href;
+    else cta.removeAttribute('href');
+  };
+
+  if (options.length > 1) {
+    const fieldset = createElement('fieldset', 'pricing-card-options');
+    fieldset.append(createElement('legend', 'sr-only', speed));
+    options.forEach((option, i) => {
+      const label = createElement('label', 'pricing-card-option');
+      const input = createElement('input');
+      input.type = 'radio';
+      input.name = `${id}-option`;
+      input.value = i;
+      input.checked = i === 0;
+      input.addEventListener('change', () => selectOption(option));
+      const text = createElement('span', 'pricing-card-option-text');
+      text.append(createElement('span', 'pricing-card-option-label', option.label));
+      if (option.details) text.append(createElement('span', 'pricing-card-option-details', option.details));
+      label.append(input, text);
+      fieldset.append(label);
+    });
+    body.append(fieldset);
+  } else if (options[0]?.label) {
+    body.append(createElement('p', 'pricing-card-option-label', options[0].label));
+  }
+
+  const ctaWrapper = createElement('p', 'pricing-card-cta-wrapper');
+  ctaWrapper.append(cta);
+  body.append(price, ctaWrapper);
+  if (options.length) selectOption(options[0]);
+  card.append(body);
+
+  if (apps.length) {
+    const { drawer, openDrawer } = buildDrawer(id, labels.appsDialog, apps);
+    const details = buildDetails(id, labels, apps, openDrawer);
+
+    const toggle = createElement('button', 'pricing-card-toggle');
+    toggle.type = 'button';
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-controls', details.id);
+    toggle.append(createElement('span', '', labels.details), createIcon('chevron-down'));
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      details.hidden = expanded;
+    });
+
+    body.append(toggle);
+    card.append(details, drawer);
+  }
+
+  return card;
+}
+
+/**
+ * Adds carousel indicator dots for the card list. The dots are only shown while the cards
+ * don't all fit (e.g. on mobile); they show the current card and scroll to a card on click.
+ * @param {Element} list The card list
+ * @returns {Element} The dots list
+ */
+function buildDots(list) {
+  const cards = [...list.children];
+  const dots = createElement('ul', 'pricing-cards-dots');
+  dots.hidden = true;
+  if (cards.length < 2) return dots;
+
+  const offsetOf = (card) => card.getBoundingClientRect().left - list.getBoundingClientRect().left;
+  const buttons = cards.map((card, i) => {
+    const li = createElement('li');
+    const button = createElement('button');
+    button.type = 'button';
+    button.setAttribute('aria-label', `Plano ${i + 1} de ${cards.length}`);
+    button.addEventListener('click', () => {
+      list.scrollTo({ left: list.scrollLeft + offsetOf(card) - 4, behavior: 'smooth' });
+    });
+    li.append(button);
+    dots.append(li);
+    return button;
+  });
+
+  const update = () => {
+    const atEnd = list.scrollLeft + list.clientWidth >= list.scrollWidth - 2;
+    let active = 0;
+    if (atEnd) {
+      active = cards.length - 1;
+    } else {
+      let closest = Infinity;
+      cards.forEach((card, i) => {
+        const distance = Math.abs(offsetOf(card));
+        if (distance < closest) {
+          closest = distance;
+          active = i;
+        }
+      });
+    }
+    buttons.forEach((button, i) => button.setAttribute('aria-current', String(i === active)));
+  };
+
+  let frame;
+  list.addEventListener('scroll', () => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(update);
+  }, { passive: true });
+
+  // show the dots only while the cards overflow the available width
+  const observer = new ResizeObserver(() => {
+    dots.hidden = list.scrollWidth <= list.clientWidth + 1;
+    update();
+  });
+  observer.observe(list);
+  return dots;
+}
+
+/**
+ * Finds the Included Apps block for a Pricing Cards block: the one in the same section,
+ * otherwise the first one on the page.
+ * @param {Element} block The Pricing Cards block
+ */
+function findIncludedApps(block) {
+  return block.closest('.section')?.querySelector('.included-apps')
+    || document.querySelector('main .included-apps');
+}
+
+/**
+ * Lists apps that were authored directly in the Pricing Cards block (before the Included Apps
+ * block existed), so authors can still select and delete them in the Universal Editor.
+ * The list is only shown in the editor.
+ * @param {Element[]} rows The app rows
+ */
+function buildLegacyAppsList(rows) {
+  const list = createElement('ul', 'pricing-cards-apps');
+  rows.forEach((row) => {
+    const li = createElement('li');
+    moveInstrumentation(row, li);
+    const { picture, name } = parseApp(row);
+    if (picture) li.append(picture);
+    li.append(createElement('span', '', name || 'App'));
+    list.append(li);
+  });
+  return list;
+}
+
+/**
+ * Pricing Cards: optional heading, shared labels and plan cards. The included apps come from
+ * the Included Apps block in the same section.
+ * Rows with a single cell hold the heading and the labels, rows with three or more cells are
+ * cards (plan, option 1, option 2). Rows with two cells are apps authored in this block before
+ * the Included Apps block existed.
+ * @param {Element} block The block element
+ */
+export default function decorate(block) {
+  instanceCount += 1;
+  const rows = [...block.children];
+  const singleCellRows = rows.filter((row) => row.children.length === 1);
+  const legacyAppRows = rows.filter((row) => row.children.length === 2);
+  const cardRows = rows.filter((row) => row.children.length > 2);
+
+  let headingRow;
+  let labelsRow;
+  if (singleCellRows.length >= 2) {
+    [headingRow, labelsRow] = singleCellRows;
+  } else if (singleCellRows.length === 1) {
+    const [row] = singleCellRows;
+    if (row.querySelector('h1, h2, h3, h4, h5, h6')) headingRow = row;
+    else labelsRow = row;
+  }
+
+  const labels = readLabels(labelsRow);
+  const includedApps = findIncludedApps(block);
+  const appRows = includedApps ? [...includedApps.children] : legacyAppRows;
+  const apps = appRows.map(parseApp).filter((app) => app.picture || app.name);
+  const content = [];
+  if (headingRow && headingRow.textContent.trim()) content.push(buildHeading(headingRow));
+
+  const list = createElement('ul', 'pricing-cards-list');
+  cardRows.forEach((row, i) => {
+    list.append(buildCard(row, labels, `pricing-cards-${instanceCount}-${i + 1}`, apps));
+  });
+  content.push(list, buildDots(list));
+  if (legacyAppRows.length) content.push(buildLegacyAppsList(legacyAppRows));
+
+  block.replaceChildren(...content);
+  decorateIcons(block);
+}

@@ -1,0 +1,44 @@
+/* the section holding the CTA bar sticks to the bottom of the viewport */
+main > .section.cta-bar-container {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  margin: 0;
+  background-color: var(--vivo-purple);
+}
+
+.cta-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 10px 0;
+}
+
+.cta-bar .cta-bar-label {
+  margin: 0;
+  color: var(--background-color);
+  font-size: var(--body-font-size-m);
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.cta-bar a.cta-bar-button:any-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 45px;
+  border-radius: 5px;
+  padding: 0 18px;
+  background-color: var(--background-color);
+  color: var(--vivo-purple);
+  font-size: var(--body-font-size-m);
+  font-weight: 400;
+  line-height: 20px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cta-bar a.cta-bar-button:hover,
+.cta-bar a.cta-bar-button:focus-visible {
+  background-color: var(--light-color);
+}

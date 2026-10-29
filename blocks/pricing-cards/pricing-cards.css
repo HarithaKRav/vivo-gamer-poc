@@ -1,0 +1,506 @@
+/* heading */
+.pricing-cards .pricing-cards-heading {
+  margin-bottom: 24px;
+}
+
+.pricing-cards .pricing-cards-heading > * {
+  margin: 0;
+}
+
+.pricing-cards .pricing-cards-eyebrow {
+  font-size: var(--body-font-size-s);
+  font-weight: 500;
+  line-height: 21px;
+  text-transform: uppercase;
+}
+
+.pricing-cards .pricing-cards-heading h1,
+.pricing-cards .pricing-cards-heading h2,
+.pricing-cards .pricing-cards-heading h3 {
+  font-size: var(--heading-font-size-xxl);
+  line-height: 1.1;
+}
+
+/* card list: a row of cards that becomes a swipeable carousel when the cards don't fit */
+.pricing-cards .pricing-cards-list {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 0 -4px;
+  padding: 4px 4px 16px;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 4px;
+  scrollbar-width: none;
+  container: pricing-cards-list / inline-size;
+}
+
+.pricing-cards .pricing-cards-list::-webkit-scrollbar {
+  display: none;
+}
+
+.pricing-cards .pricing-card {
+  flex: 1 0 100%;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background-color: var(--background-color);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 15%);
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+
+/*
+ * cards are at least 235px wide: as many cards per view as fit, sharing the width
+ * (one card per view when two don't fit); on tablet and desktop a card is at most 310px
+ */
+@container pricing-cards-list (width >= 482px) {
+  .pricing-cards .pricing-card {
+    flex-basis: calc((100% - 12px) / 2);
+  }
+}
+
+@container pricing-cards-list (width >= 729px) {
+  .pricing-cards .pricing-card {
+    flex-basis: calc((100% - 24px) / 3);
+  }
+}
+
+@container pricing-cards-list (width >= 976px) {
+  .pricing-cards .pricing-card {
+    flex-basis: calc((100% - 36px) / 4);
+  }
+}
+
+@container pricing-cards-list (width >= 1223px) {
+  .pricing-cards .pricing-card {
+    flex-basis: calc((100% - 48px) / 5);
+  }
+}
+
+@media (width >= 768px) {
+  .pricing-cards .pricing-card {
+    max-width: 310px;
+  }
+}
+
+.pricing-cards .pricing-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+
+.pricing-cards .pricing-card-body p {
+  margin: 0;
+}
+
+.pricing-cards .pricing-card-plan {
+  font-size: var(--body-font-size-m);
+  font-weight: 400;
+  line-height: 24px;
+}
+
+/* speed */
+.pricing-cards .pricing-card-speed {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.pricing-cards .pricing-card-speed .icon {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+}
+
+.pricing-cards .pricing-card-speed-value {
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 32px;
+}
+
+.pricing-cards .pricing-card-speed-description {
+  padding-top: 10px;
+  font-size: var(--body-font-size-s);
+  line-height: 1.1;
+}
+
+/* options */
+.pricing-cards .pricing-card-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.pricing-cards .pricing-card-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.pricing-cards .pricing-card-option input {
+  flex: 0 0 20px;
+  appearance: none;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  border: 2px solid var(--text-secondary-color);
+  border-radius: 50%;
+  background-color: var(--background-color);
+  cursor: pointer;
+}
+
+.pricing-cards .pricing-card-option input:checked {
+  border-color: var(--vivo-purple);
+  background: radial-gradient(circle, var(--vivo-purple) 0 4px, var(--background-color) 5px);
+}
+
+.pricing-cards .pricing-card-option input:focus-visible {
+  outline: 2px solid var(--vivo-purple);
+  outline-offset: 2px;
+}
+
+.pricing-cards .pricing-card-option-text {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1px;
+}
+
+.pricing-cards .pricing-card-option-label {
+  font-size: var(--body-font-size-s);
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.pricing-cards .pricing-card-option-details {
+  font-size: var(--body-font-size-xs);
+  font-weight: 400;
+  line-height: 14px;
+  color: var(--text-secondary-color);
+}
+
+/* price and call to action */
+.pricing-cards .pricing-card-price {
+  margin-top: 8px;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 32px;
+}
+
+.pricing-cards a.pricing-card-cta:any-link {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  border-radius: 4px;
+  padding: 8px 16px;
+  background-color: var(--vivo-pink);
+  color: var(--background-color);
+  font-size: var(--body-font-size-s);
+  font-weight: 400;
+  line-height: 20px;
+  text-decoration: none;
+}
+
+.pricing-cards a.pricing-card-cta:hover,
+.pricing-cards a.pricing-card-cta:focus-visible {
+  background-color: var(--vivo-pink-hover);
+}
+
+/* more details */
+.pricing-cards .pricing-card-toggle {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  gap: 2px;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--text-secondary-color);
+  font-size: var(--body-font-size-s);
+  font-weight: 400;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+.pricing-cards .pricing-card-toggle .icon-chevron-down {
+  transition: transform 0.2s ease;
+}
+
+.pricing-cards .pricing-card-toggle[aria-expanded='true'] .icon-chevron-down {
+  transform: rotate(180deg);
+}
+
+.pricing-cards .pricing-card-details {
+  padding: 16px 24px 24px;
+  background-color: var(--light-color);
+}
+
+.pricing-cards .pricing-card-details[hidden] {
+  display: none;
+}
+
+.pricing-cards .pricing-card-details p {
+  margin: 0;
+}
+
+.pricing-cards .pricing-card-apps-heading {
+  font-size: var(--body-font-size-s);
+  font-weight: 400;
+}
+
+.pricing-cards .pricing-card-apps-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.pricing-cards .pricing-card-apps-preview picture,
+.pricing-cards .pricing-card-apps-preview img {
+  display: block;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.pricing-cards .pricing-card-apps-more {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--text-secondary-color);
+  border-radius: 4px;
+  color: var(--text-secondary-color);
+  font-size: var(--body-font-size-xs);
+  font-weight: 400;
+}
+
+.pricing-cards .pricing-card-apps-link {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--vivo-purple);
+  font-size: var(--body-font-size-s);
+  font-weight: 400;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* carousel indicator dots, only shown while the cards overflow */
+.pricing-cards .pricing-cards-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pricing-cards .pricing-cards-dots[hidden] {
+  display: none;
+}
+
+.pricing-cards .pricing-cards-dots button {
+  display: block;
+  width: 8px;
+  height: 8px;
+  margin: 0;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  background-color: #d9c2e6;
+  cursor: pointer;
+}
+
+.pricing-cards .pricing-cards-dots button[aria-current='true'] {
+  background-color: var(--vivo-purple);
+}
+
+.pricing-cards .pricing-cards-dots button:focus-visible {
+  outline: 2px solid var(--vivo-purple);
+  outline-offset: 2px;
+}
+
+/* included apps drawer, slides in from the right */
+.pricing-cards .pricing-cards-drawer {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0 0 0 auto;
+  border: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  overflow-y: auto;
+  animation: pricing-cards-drawer-in 0.3s ease-out;
+}
+
+.pricing-cards .pricing-cards-drawer.is-closing {
+  animation: pricing-cards-drawer-out 0.25s ease-in forwards;
+}
+
+.pricing-cards .pricing-cards-drawer::backdrop {
+  background-color: rgb(0 0 0 / 50%);
+}
+
+@keyframes pricing-cards-drawer-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes pricing-cards-drawer-out {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pricing-cards .pricing-cards-drawer,
+  .pricing-cards .pricing-cards-drawer.is-closing {
+    animation: none;
+  }
+}
+
+.pricing-cards .pricing-cards-drawer-content {
+  position: relative;
+  padding: 70px 30px;
+}
+
+.pricing-cards .pricing-cards-drawer-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  display: flex;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.pricing-cards .pricing-cards-drawer-close .icon-close {
+  width: 25px;
+  height: 25px;
+}
+
+.pricing-cards .pricing-cards-drawer-title {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 36px;
+}
+
+.pricing-cards .pricing-cards-drawer-apps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin: 30px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pricing-cards .pricing-cards-drawer-apps li {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 140px;
+}
+
+.pricing-cards .pricing-cards-drawer-apps picture,
+.pricing-cards .pricing-cards-drawer-apps img {
+  display: block;
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+}
+
+.pricing-cards .pricing-cards-drawer-app-text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pricing-cards .pricing-cards-drawer-apps p {
+  margin: 0;
+}
+
+.pricing-cards .pricing-cards-drawer-app-name {
+  font-size: var(--body-font-size-m);
+  font-weight: 300;
+  line-height: 24px;
+}
+
+.pricing-cards .pricing-cards-drawer-app-description {
+  color: var(--text-secondary-color);
+  font-size: var(--body-font-size-s);
+  font-weight: 300;
+  line-height: 20px;
+}
+
+/* editor-only list of apps authored in this block before the Included Apps block existed */
+.pricing-cards .pricing-cards-apps {
+  display: none;
+}
+
+.pricing-cards[data-aue-resource] .pricing-cards-apps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin: 16px 0 0;
+  border: 1px dashed var(--border-color);
+  padding: 12px 16px;
+  list-style: none;
+  font-size: var(--body-font-size-xs);
+}
+
+.pricing-cards[data-aue-resource] .pricing-cards-apps::before {
+  content: 'Old app items, please delete them and use the Included Apps block:';
+  flex-basis: 100%;
+  color: var(--text-secondary-color);
+}
+
+.pricing-cards[data-aue-resource] .pricing-cards-apps li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pricing-cards[data-aue-resource] .pricing-cards-apps picture,
+.pricing-cards[data-aue-resource] .pricing-cards-apps img {
+  display: block;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+@media (width >= 768px) {
+  .pricing-cards .pricing-cards-heading {
+    margin-bottom: 40px;
+  }
+
+
+  .pricing-cards .pricing-cards-drawer {
+    width: 630px;
+  }
+
+  .pricing-cards .pricing-cards-drawer-content {
+    padding: 100px 80px 90px 50px;
+  }
+}

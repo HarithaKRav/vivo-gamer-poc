@@ -1,0 +1,13 @@
+{
+  "sites": {
+    "vivo-gamer-poc": {
+      "previewOrg": "harithakrav",
+      "previewSite": "vivo-gamer-poc",
+      "contentHostUrl": "author-p123615-e2372591.adobeaemcloud.com",
+      "aemSitePath": "/content/vivo-gamer-poc",
+      "aemAssetsFolderPath": "/content/dam/vivo-gamer-poc",
+      "aemSiteName": "vivo-gamer-poc",
+      "aemSiteTitle": "Vivo Gamer POC"
+    }
+  }
+}
