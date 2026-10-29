@@ -13,6 +13,26 @@ import {
 } from './aem.js';
 
 /**
+ * The site's Content-Security-Policy requires Trusted Types (require-trusted-types-for 'script').
+ * The boilerplate assigns HTML fetched from this site (e.g. the nav and footer fragments) with
+ * innerHTML and loads scripts by URL, so a default policy lets these values through.
+ */
+function setupTrustedTypes() {
+  if (!window.trustedTypes?.createPolicy || window.trustedTypes.defaultPolicy) return;
+  try {
+    window.trustedTypes.createPolicy('default', {
+      createHTML: (html) => html,
+      createScriptURL: (url) => url,
+    });
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.warn('Trusted Types default policy could not be created', e);
+  }
+}
+
+setupTrustedTypes();
+
+/**
  * Moves all the attributes from a given elmenet to another given element.
  * @param {Element} from the element to copy attributes from
  * @param {Element} to the element to copy attributes to
