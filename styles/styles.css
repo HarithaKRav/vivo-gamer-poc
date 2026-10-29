@@ -360,3 +360,12 @@ main .section.highlight {
   margin: 0;
   padding: 40px 0;
 }
+
+/* Universal Editor: keep empty rich text (e.g. a newly added Text) visible and selectable */
+main [data-aue-type='richtext']:empty,
+main [data-aue-type='richtext'] > p:only-child:empty,
+main p[data-aue-prop]:empty,
+main p[data-richtext-prop]:empty {
+  min-height: 1.5em;
+  outline: 1px dashed var(--border-color);
+}
