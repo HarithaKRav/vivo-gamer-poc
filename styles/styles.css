@@ -332,15 +332,9 @@ main > .section:first-of-type {
   margin-top: 0;
 }
 
-/* the header is fixed on mobile, keep anchored sections below it */
+/* the header is fixed at the top, keep anchored sections below it */
 main > .section[id] {
   scroll-margin-top: calc(var(--nav-height) + 16px);
-}
-
-@media (width >= 900px) {
-  main > .section[id] {
-    scroll-margin-top: 16px;
-  }
 }
 
 /* utility for content that is only exposed to assistive technology */

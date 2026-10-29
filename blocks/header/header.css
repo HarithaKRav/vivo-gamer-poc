@@ -1,9 +1,11 @@
-/* header and nav layout */
+/* header and nav layout: the header stays fixed at the top on all screen sizes */
 header .nav-wrapper {
   background-color: var(--background-color);
   width: 100%;
-  z-index: 2;
+  z-index: 20;
   position: fixed;
+  top: 0;
+  box-shadow: 0 1px 0 rgb(0 0 0 / 8%);
 }
 
 header nav {
@@ -31,10 +33,6 @@ header nav[aria-expanded='true'] {
 }
 
 @media (width >= 900px) {
-  header .nav-wrapper {
-    position: relative;
-  }
-
   header nav {
     display: flex;
     justify-content: space-between;
