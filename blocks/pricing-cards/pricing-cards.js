@@ -86,7 +86,7 @@ function buildHeading(row) {
   return heading;
 }
 
-function buildDrawer(id, title, apps, instrumented) {
+function buildDrawer(id, title, apps) {
   const drawer = createElement('dialog', 'pricing-cards-drawer');
   drawer.setAttribute('aria-labelledby', `${id}-title`);
   const content = createElement('div', 'pricing-cards-drawer-content');
@@ -115,13 +115,9 @@ function buildDrawer(id, title, apps, instrumented) {
   heading.id = `${id}-title`;
 
   const list = createElement('ul', 'pricing-cards-drawer-apps');
-  apps.forEach(({
-    row, picture, name, description,
-  }) => {
+  apps.forEach(({ picture, name, description }) => {
     const li = createElement('li');
-    // apps are shared by all cards: only the first card's list carries the editor instrumentation
-    if (instrumented) moveInstrumentation(row, li);
-    if (picture) li.append(instrumented ? picture : picture.cloneNode(true));
+    if (picture) li.append(picture.cloneNode(true));
     const text = createElement('div', 'pricing-cards-drawer-app-text');
     if (name) text.append(createElement('p', 'pricing-cards-drawer-app-name', name));
     if (description) text.append(createElement('p', 'pricing-cards-drawer-app-description', description));
@@ -177,7 +173,7 @@ function buildDetails(id, labels, apps, openDrawer) {
   return details;
 }
 
-function buildCard(row, labels, id, apps, isFirst) {
+function buildCard(row, labels, id, apps) {
   const [planCell, ...optionCells] = [...row.children];
   const [speed = '', speedDescription = ''] = planCell ? getTexts([...planCell.children]) : [];
   const options = optionCells
@@ -239,7 +235,7 @@ function buildCard(row, labels, id, apps, isFirst) {
   card.append(body);
 
   if (apps.length) {
-    const { drawer, openDrawer } = buildDrawer(id, labels.appsDialog, apps, isFirst);
+    const { drawer, openDrawer } = buildDrawer(id, labels.appsDialog, apps);
     const details = buildDetails(id, labels, apps, openDrawer);
 
     const toggle = createElement('button', 'pricing-card-toggle');
@@ -258,6 +254,24 @@ function buildCard(row, labels, id, apps, isFirst) {
   }
 
   return card;
+}
+
+/**
+ * Builds the list of included apps that carries their Universal Editor instrumentation.
+ * The apps belong to the block (not to a card), so they get their own list, directly in the block.
+ * It is only shown in the Universal Editor, where authors select, add and remove apps.
+ * @param {Object[]} apps The parsed apps
+ */
+function buildAppsList(apps) {
+  const list = createElement('ul', 'pricing-cards-apps');
+  apps.forEach(({ row, picture, name }) => {
+    const li = createElement('li');
+    moveInstrumentation(row, li);
+    if (picture) li.append(picture);
+    li.append(createElement('span', '', name || 'New app'));
+    list.append(li);
+  });
+  return list;
 }
 
 /**
@@ -293,9 +307,10 @@ export default function decorate(block) {
 
   const list = createElement('ul', 'pricing-cards-list');
   cardRows.forEach((row, i) => {
-    list.append(buildCard(row, labels, `pricing-cards-${instanceCount}-${i + 1}`, apps, i === 0));
+    list.append(buildCard(row, labels, `pricing-cards-${instanceCount}-${i + 1}`, apps));
   });
   content.push(list);
+  if (apps.length) content.push(buildAppsList(apps));
 
   block.replaceChildren(...content);
   decorateIcons(block);

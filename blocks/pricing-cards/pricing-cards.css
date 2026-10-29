@@ -383,6 +383,43 @@
   line-height: 20px;
 }
 
+/* editor-only list of the included apps, so authors can select, add and remove them */
+.pricing-cards .pricing-cards-apps {
+  display: none;
+}
+
+.pricing-cards[data-aue-resource] .pricing-cards-apps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin: 16px 0 0;
+  border: 1px dashed var(--border-color);
+  padding: 12px 16px;
+  list-style: none;
+  font-size: var(--body-font-size-xs);
+}
+
+.pricing-cards[data-aue-resource] .pricing-cards-apps::before {
+  content: 'Included apps (shown in the editor only):';
+  flex-basis: 100%;
+  color: var(--text-secondary-color);
+}
+
+.pricing-cards[data-aue-resource] .pricing-cards-apps li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pricing-cards[data-aue-resource] .pricing-cards-apps picture,
+.pricing-cards[data-aue-resource] .pricing-cards-apps img {
+  display: block;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
 @media (width >= 900px) {
   .pricing-cards .pricing-cards-heading {
     margin-bottom: 40px;
