@@ -49,6 +49,25 @@
   scroll-snap-align: start;
 }
 
+/*
+ * card widths follow the source site:
+ * - below 500px: one card per view, as wide as the content
+ * - 500px to 767px: two cards per view
+ * - 768px and up: cards grow from 270px up to 310px, as many as fit; the rest scroll
+ */
+@media (width >= 500px) {
+  .pricing-cards .pricing-card {
+    flex-basis: calc((100% - 12px) / 2);
+  }
+}
+
+@media (width >= 768px) {
+  .pricing-cards .pricing-card {
+    flex: 1 0 270px;
+    max-width: 310px;
+  }
+}
+
 .pricing-cards .pricing-card-body {
   display: flex;
   flex-direction: column;
@@ -460,9 +479,6 @@
     margin-bottom: 40px;
   }
 
-  .pricing-cards .pricing-card {
-    flex-basis: 310px;
-  }
 
   .pricing-cards .pricing-cards-drawer {
     width: 630px;
