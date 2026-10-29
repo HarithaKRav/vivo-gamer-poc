@@ -1,5 +1,5 @@
 import { getMetadata } from '../../scripts/aem.js';
-import { flattenRichText, loadFragment } from '../fragment/fragment.js';
+import { loadFragment } from '../fragment/fragment.js';
 
 /**
  * loads and decorates the footer
@@ -10,7 +10,6 @@ export default async function decorate(block) {
   const footerMeta = getMetadata('footer');
   const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
   const fragment = await loadFragment(footerPath);
-  if (fragment) flattenRichText(fragment);
 
   // decorate footer DOM
   block.textContent = '';

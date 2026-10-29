@@ -72,37 +72,6 @@ export async function loadFragment(path) {
   return null;
 }
 
-/**
- * Turns Rich Text blocks in a loaded fragment into default content, merging them with adjacent
- * default content, so header and footer decoration can treat them like regular text.
- * @param {Element} fragment The fragment root element, as returned by loadFragment
- */
-export function flattenRichText(fragment) {
-  fragment.querySelectorAll(':scope > .section').forEach((section) => {
-    const wrappers = [...section.children];
-    if (!wrappers.some((wrapper) => wrapper.classList.contains('rich-text-wrapper'))) return;
-
-    let current = null;
-    wrappers.forEach((wrapper) => {
-      const isRichText = wrapper.classList.contains('rich-text-wrapper');
-      if (!isRichText && !wrapper.classList.contains('default-content-wrapper')) {
-        current = null;
-        return;
-      }
-      const content = isRichText
-        ? [...wrapper.querySelectorAll(':scope > .rich-text > .rich-text-content > *')]
-        : [...wrapper.children];
-      if (!current) {
-        current = document.createElement('div');
-        current.className = 'default-content-wrapper';
-        wrapper.before(current);
-      }
-      current.append(...content);
-      wrapper.remove();
-    });
-  });
-}
-
 export default async function decorate(block) {
   const link = block.querySelector('a');
   const path = link ? link.getAttribute('href') : block.textContent.trim();
