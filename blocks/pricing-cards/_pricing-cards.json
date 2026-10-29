@@ -42,21 +42,6 @@
           }
         }
       }
-    },
-    {
-      "title": "Included App",
-      "id": "pricing-card-app",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "Included App",
-              "model": "pricing-card-app"
-            }
-          }
-        }
-      }
     }
   ],
   "models": [
@@ -234,45 +219,13 @@
           "value": "Consultar Fibra"
         }
       ]
-    },
-    {
-      "id": "pricing-card-app",
-      "fields": [
-        {
-          "component": "reference",
-          "valueType": "string",
-          "name": "image",
-          "label": "App Logo",
-          "multi": false
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "imageAlt",
-          "label": "App Logo Alt Text"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "app_name",
-          "label": "App Name",
-          "required": true
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "app_description",
-          "label": "App Description"
-        }
-      ]
     }
   ],
   "filters": [
     {
       "id": "pricing-cards",
       "components": [
-        "pricing-card",
-        "pricing-card-app"
+        "pricing-card"
       ]
     }
   ]

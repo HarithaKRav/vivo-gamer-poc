@@ -354,6 +354,37 @@
     ]
   },
   {
+    "id": "included-app",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "App Logo",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "App Logo Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "app_name",
+        "label": "App Name",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "app_description",
+        "label": "App Description"
+      }
+    ]
+  },
+  {
     "id": "legal-disclaimer",
     "fields": [
       {
@@ -601,37 +632,6 @@
         "name": "option2_linkText",
         "label": "Option 2: Button Label",
         "value": "Consultar Fibra"
-      }
-    ]
-  },
-  {
-    "id": "pricing-card-app",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "App Logo",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "App Logo Alt Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "app_name",
-        "label": "App Name",
-        "required": true
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "app_description",
-        "label": "App Description"
       }
     ]
   },

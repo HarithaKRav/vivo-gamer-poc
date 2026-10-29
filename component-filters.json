@@ -18,6 +18,7 @@
       "fragment",
       "announcement-banner",
       "pricing-cards",
+      "included-apps",
       "link-list",
       "hero-banner",
       "partner-promo",
@@ -54,6 +55,12 @@
     ]
   },
   {
+    "id": "included-apps",
+    "components": [
+      "included-app"
+    ]
+  },
+  {
     "id": "link-list",
     "components": [
       "link-list-item"
@@ -62,8 +69,7 @@
   {
     "id": "pricing-cards",
     "components": [
-      "pricing-card",
-      "pricing-card-app"
+      "pricing-card"
     ]
   }
 ]

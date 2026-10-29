@@ -221,6 +221,36 @@
           }
         },
         {
+          "title": "Included Apps",
+          "id": "included-apps",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Included Apps",
+                  "filter": "included-apps"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "App",
+          "id": "included-app",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "App",
+                  "model": "included-app"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Legal Disclaimer",
           "id": "legal-disclaimer",
           "plugins": {
@@ -318,21 +348,6 @@
                   "option2_name": "Vivo Fibra",
                   "option2_label": "Vivo Fibra",
                   "option2_linkText": "Consultar Fibra"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Included App",
-          "id": "pricing-card-app",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Included App",
-                  "model": "pricing-card-app"
                 }
               }
             }

@@ -257,35 +257,47 @@ function buildCard(row, labels, id, apps) {
 }
 
 /**
- * Builds the list of included apps that carries their Universal Editor instrumentation.
- * The apps belong to the block (not to a card), so they get their own list, directly in the block.
- * It is only shown in the Universal Editor, where authors select, add and remove apps.
- * @param {Object[]} apps The parsed apps
+ * Finds the Included Apps block for a Pricing Cards block: the one in the same section,
+ * otherwise the first one on the page.
+ * @param {Element} block The Pricing Cards block
  */
-function buildAppsList(apps) {
+function findIncludedApps(block) {
+  return block.closest('.section')?.querySelector('.included-apps')
+    || document.querySelector('main .included-apps');
+}
+
+/**
+ * Lists apps that were authored directly in the Pricing Cards block (before the Included Apps
+ * block existed), so authors can still select and delete them in the Universal Editor.
+ * The list is only shown in the editor.
+ * @param {Element[]} rows The app rows
+ */
+function buildLegacyAppsList(rows) {
   const list = createElement('ul', 'pricing-cards-apps');
-  apps.forEach(({ row, picture, name }) => {
+  rows.forEach((row) => {
     const li = createElement('li');
     moveInstrumentation(row, li);
+    const { picture, name } = parseApp(row);
     if (picture) li.append(picture);
-    li.append(createElement('span', '', name || 'New app'));
+    li.append(createElement('span', '', name || 'App'));
     list.append(li);
   });
   return list;
 }
 
 /**
- * Pricing Cards: optional heading, shared labels, plan cards and the included apps.
- * Rows with a single cell hold the heading and the labels, rows with two cells are
- * included apps (logo, name and description), rows with three or more cells are cards
- * (plan, option 1, option 2).
+ * Pricing Cards: optional heading, shared labels and plan cards. The included apps come from
+ * the Included Apps block in the same section.
+ * Rows with a single cell hold the heading and the labels, rows with three or more cells are
+ * cards (plan, option 1, option 2). Rows with two cells are apps authored in this block before
+ * the Included Apps block existed.
  * @param {Element} block The block element
  */
 export default function decorate(block) {
   instanceCount += 1;
   const rows = [...block.children];
   const singleCellRows = rows.filter((row) => row.children.length === 1);
-  const appRows = rows.filter((row) => row.children.length === 2);
+  const legacyAppRows = rows.filter((row) => row.children.length === 2);
   const cardRows = rows.filter((row) => row.children.length > 2);
 
   let headingRow;
@@ -299,9 +311,9 @@ export default function decorate(block) {
   }
 
   const labels = readLabels(labelsRow);
-  // keep new, still empty apps in the Universal Editor so authors can select and complete them
-  const apps = appRows.map(parseApp)
-    .filter((app) => app.picture || app.name || app.row.hasAttribute('data-aue-resource'));
+  const includedApps = findIncludedApps(block);
+  const appRows = includedApps ? [...includedApps.children] : legacyAppRows;
+  const apps = appRows.map(parseApp).filter((app) => app.picture || app.name);
   const content = [];
   if (headingRow && headingRow.textContent.trim()) content.push(buildHeading(headingRow));
 
@@ -310,7 +322,7 @@ export default function decorate(block) {
     list.append(buildCard(row, labels, `pricing-cards-${instanceCount}-${i + 1}`, apps));
   });
   content.push(list);
-  if (apps.length) content.push(buildAppsList(apps));
+  if (legacyAppRows.length) content.push(buildLegacyAppsList(legacyAppRows));
 
   block.replaceChildren(...content);
   decorateIcons(block);
