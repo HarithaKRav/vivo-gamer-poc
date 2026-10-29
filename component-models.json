@@ -194,6 +194,34 @@
     ]
   },
   {
+    "id": "chat-button",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Chat URL",
+        "description": "Page loaded in the side drawer, e.g. https://plataforma.portal.vivo.com.br/chat/fibra/",
+        "required": true
+      },
+      {
+        "component": "text-area",
+        "valueType": "string",
+        "name": "hoverLabel",
+        "label": "Hover Text",
+        "description": "Shown next to the icon on hover. Press Enter for a line break.",
+        "value": "Compre com um consultor online"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Accessible Label",
+        "description": "Read by screen readers and used as the drawer title",
+        "value": "Compre com um consultor online"
+      }
+    ]
+  },
+  {
     "id": "columns",
     "fields": [
       {
@@ -660,6 +688,14 @@
         "label": "Accessible Label",
         "description": "Read by screen readers, e.g. Fale conosco pelo WhatsApp",
         "value": "Fale conosco pelo WhatsApp"
+      },
+      {
+        "component": "text-area",
+        "valueType": "string",
+        "name": "hoverLabel",
+        "label": "Hover Text",
+        "description": "Shown next to the icon on hover. Press Enter for a line break, e.g. Compre direto / pelo WhatsApp",
+        "value": "Compre direto\npelo WhatsApp"
       }
     ]
   }

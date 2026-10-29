@@ -10,18 +10,48 @@ main > .section > .whatsapp-wrapper {
   display: block;
   width: 60px;
   height: 71px;
-  transition: transform 0.2s ease;
-}
-
-.whatsapp a.whatsapp-link:hover,
-.whatsapp a.whatsapp-link:focus-visible {
-  transform: scale(1.05);
 }
 
 .whatsapp .icon {
+  position: relative;
   display: block;
   width: 60px;
   height: 71px;
+}
+
+/* label that expands behind the icon on hover */
+.whatsapp .whatsapp-hover-text {
+  position: absolute;
+  right: 4px;
+  bottom: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 56px;
+  height: 60px;
+  border-radius: 15px 50px 50px 15px;
+  padding: 0 0 0 16px;
+  background-color: #64d072;
+  color: var(--background-color);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 0;
+  transition: width 0.25s ease, opacity 0.2s ease;
+}
+
+.whatsapp a.whatsapp-link:hover .whatsapp-hover-text,
+.whatsapp a.whatsapp-link:focus-visible .whatsapp-hover-text {
+  width: 181px;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp .whatsapp-hover-text {
+    transition: none;
+  }
 }
 
 @media (width >= 900px) {

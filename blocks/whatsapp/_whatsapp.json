@@ -10,7 +10,8 @@
             "template": {
               "name": "WhatsApp",
               "model": "whatsapp",
-              "label": "Fale conosco pelo WhatsApp"
+              "label": "Fale conosco pelo WhatsApp",
+              "hoverLabel": "Compre direto\npelo WhatsApp"
             }
           }
         }
@@ -43,6 +44,14 @@
           "label": "Accessible Label",
           "description": "Read by screen readers, e.g. Fale conosco pelo WhatsApp",
           "value": "Fale conosco pelo WhatsApp"
+        },
+        {
+          "component": "text-area",
+          "valueType": "string",
+          "name": "hoverLabel",
+          "label": "Hover Text",
+          "description": "Shown next to the icon on hover. Press Enter for a line break, e.g. Compre direto / pelo WhatsApp",
+          "value": "Compre direto\npelo WhatsApp"
         }
       ]
     }
