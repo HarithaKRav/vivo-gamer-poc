@@ -1,0 +1,44 @@
+/* vertical space between content, height chosen by the author (desktop and optional mobile) */
+main > .section > .spacer-wrapper {
+  padding: 0;
+}
+
+.spacer {
+  height: var(--spacer-mobile, var(--spacer-height, 40px));
+}
+
+@media (width >= 900px) {
+  .spacer {
+    height: var(--spacer-height, 40px);
+  }
+}
+
+.spacer.height-0 { --spacer-height: 0px; }
+.spacer.height-8 { --spacer-height: 8px; }
+.spacer.height-16 { --spacer-height: 16px; }
+.spacer.height-24 { --spacer-height: 24px; }
+.spacer.height-32 { --spacer-height: 32px; }
+.spacer.height-40 { --spacer-height: 40px; }
+.spacer.height-48 { --spacer-height: 48px; }
+.spacer.height-64 { --spacer-height: 64px; }
+.spacer.height-80 { --spacer-height: 80px; }
+.spacer.height-120 { --spacer-height: 120px; }
+
+.spacer.mobile-0 { --spacer-mobile: 0px; }
+.spacer.mobile-8 { --spacer-mobile: 8px; }
+.spacer.mobile-16 { --spacer-mobile: 16px; }
+.spacer.mobile-24 { --spacer-mobile: 24px; }
+.spacer.mobile-32 { --spacer-mobile: 32px; }
+.spacer.mobile-40 { --spacer-mobile: 40px; }
+.spacer.mobile-48 { --spacer-mobile: 48px; }
+.spacer.mobile-64 { --spacer-mobile: 64px; }
+.spacer.mobile-80 { --spacer-mobile: 80px; }
+.spacer.mobile-120 { --spacer-mobile: 120px; }
+
+/* Universal Editor: show the spacer so authors can select it */
+.spacer[data-aue-resource] {
+  min-height: 8px;
+  outline: 1px dashed var(--border-color);
+  outline-offset: -1px;
+  background: repeating-linear-gradient(45deg, transparent 0 6px, rgb(0 0 0 / 4%) 6px 12px);
+}

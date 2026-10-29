@@ -163,8 +163,9 @@ pre {
   white-space: pre;
 }
 
+/* sections have no outer margins: authors add space with the Spacer block */
 main > div {
-  margin: 40px 16px;
+  margin: 0;
 }
 
 input,
@@ -318,7 +319,7 @@ main img {
 
 /* sections */
 main > .section {
-  margin: 40px 0;
+  margin: 0;
 }
 
 main > .section > div {
@@ -330,6 +331,23 @@ main > .section > div {
 
 main > .section:first-of-type {
   margin-top: 0;
+}
+
+/* "Narrow" section style: content is at most 540px / 720px / 960px wide on mobile / tablet / desktop */
+main > .section.narrow > div {
+  max-width: calc(540px + 2 * var(--content-padding));
+}
+
+@media (width >= 600px) {
+  main > .section.narrow > div {
+    max-width: calc(720px + 2 * var(--content-padding));
+  }
+}
+
+@media (width >= 900px) {
+  main > .section.narrow > div {
+    max-width: calc(960px + 2 * var(--content-padding));
+  }
 }
 
 /* the header is fixed at the top, keep anchored sections below it */
