@@ -2,7 +2,7 @@
 /* eslint-disable no-cond-assign */
 /* eslint-disable import/prefer-default-export */
 
-// group editable texts in single wrappers if applicable.
+// group editable texts in single wrappers if applicable, so the Universal Editor can select them.
 // this script should execute after script.js but before the the universal editor cors script
 // and any block being loaded
 
