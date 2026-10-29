@@ -33,6 +33,7 @@
   scroll-snap-type: x mandatory;
   scroll-padding: 0 4px;
   scrollbar-width: none;
+  container: pricing-cards-list / inline-size;
 }
 
 .pricing-cards .pricing-cards-list::-webkit-scrollbar {
@@ -40,7 +41,7 @@
 }
 
 .pricing-cards .pricing-card {
-  flex: 0 0 100%;
+  flex: 1 0 100%;
   box-sizing: border-box;
   border-radius: 4px;
   background-color: var(--background-color);
@@ -50,20 +51,35 @@
 }
 
 /*
- * card widths follow the source site:
- * - below 500px: one card per view, as wide as the content
- * - 500px to 767px: two cards per view
- * - 768px and up: cards grow from 270px up to 310px, as many as fit; the rest scroll
+ * cards are at least 235px wide: as many cards per view as fit, sharing the width
+ * (one card per view when two don't fit); on tablet and desktop a card is at most 310px
  */
-@media (width >= 500px) {
+@container pricing-cards-list (width >= 482px) {
   .pricing-cards .pricing-card {
     flex-basis: calc((100% - 12px) / 2);
   }
 }
 
+@container pricing-cards-list (width >= 729px) {
+  .pricing-cards .pricing-card {
+    flex-basis: calc((100% - 24px) / 3);
+  }
+}
+
+@container pricing-cards-list (width >= 976px) {
+  .pricing-cards .pricing-card {
+    flex-basis: calc((100% - 36px) / 4);
+  }
+}
+
+@container pricing-cards-list (width >= 1223px) {
+  .pricing-cards .pricing-card {
+    flex-basis: calc((100% - 48px) / 5);
+  }
+}
+
 @media (width >= 768px) {
   .pricing-cards .pricing-card {
-    flex: 1 0 270px;
     max-width: 310px;
   }
 }
