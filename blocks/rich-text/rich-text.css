@@ -1,0 +1,14 @@
+.rich-text .rich-text-content > :first-child {
+  margin-top: 0;
+}
+
+.rich-text .rich-text-content > :last-child {
+  margin-bottom: 0;
+}
+
+/* Universal Editor: keep an empty Rich Text visible and selectable */
+.rich-text[data-aue-resource]:empty,
+.rich-text[data-aue-resource] .rich-text-content:empty {
+  min-height: 1.5em;
+  outline: 1px dashed var(--border-color);
+}

@@ -612,6 +612,18 @@
     ]
   },
   {
+    "id": "rich-text",
+    "fields": [
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "label": "Text",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "whatsapp",
     "fields": [
       {
