@@ -130,7 +130,7 @@ main > .section > .chat-button-wrapper {
   border: 0;
 }
 
-@media (width >= 900px) {
+@media (width >= 768px) {
   .chat-button .chat-button-trigger {
     right: 32px;
   }

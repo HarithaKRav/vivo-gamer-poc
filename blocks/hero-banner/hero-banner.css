@@ -79,7 +79,7 @@ main > .section > .hero-banner-wrapper {
   height: auto;
 }
 
-@media (width >= 600px) {
+@media (width >= 768px) {
   .hero-banner .hero-banner-benefits {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 177px));
@@ -91,7 +91,7 @@ main > .section > .hero-banner-wrapper {
   }
 }
 
-@media (width >= 900px) {
+@media (width >= 768px) {
   .hero-banner {
     flex-direction: row;
     justify-content: space-between;

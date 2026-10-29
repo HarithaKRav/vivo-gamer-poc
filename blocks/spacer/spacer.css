@@ -7,7 +7,7 @@ main > .section > .spacer-wrapper {
   height: var(--spacer-mobile, var(--spacer-height, 40px));
 }
 
-@media (width >= 900px) {
+@media (width >= 768px) {
   .spacer {
     height: var(--spacer-height, 40px);
   }

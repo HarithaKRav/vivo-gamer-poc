@@ -38,7 +38,7 @@
   line-height: 20px;
 }
 
-@media (width >= 900px) {
+@media (width >= 768px) {
   .partner-promo {
     flex-direction: row;
     align-items: center;

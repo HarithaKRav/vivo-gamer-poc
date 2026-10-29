@@ -474,7 +474,7 @@
   object-fit: contain;
 }
 
-@media (width >= 900px) {
+@media (width >= 768px) {
   .pricing-cards .pricing-cards-heading {
     margin-bottom: 40px;
   }

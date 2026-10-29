@@ -45,7 +45,8 @@
   --heading-font-size-s: 18px;
   --heading-font-size-xs: 16px;
 
-  /* layout: below 768px all sections, header and footer are at most 540px wide, centered */
+  /* layout breakpoints: mobile up to 767px, tablet 768px to 1023px, desktop from 1024px.
+     on mobile all sections, header and footer are at most 540px wide, centered */
   --content-max-width: 540px;
   --content-padding: 24px;
 
@@ -66,15 +67,12 @@
   src: local('Arial');
 }
 
+/* tablet and desktop */
 @media (width >= 768px) {
   :root {
     --content-max-width: 1440px;
     --content-padding: 30px;
-  }
-}
 
-@media (width >= 900px) {
-  :root {
     /* heading sizes */
     --heading-font-size-xxl: 40px;
     --heading-font-size-xl: 32px;
@@ -85,7 +83,8 @@
   }
 }
 
-@media (width >= 1200px) {
+/* desktop */
+@media (width >= 1024px) {
   :root {
     --content-padding: 60px;
   }
@@ -342,7 +341,7 @@ main > .section:first-of-type {
   }
 }
 
-@media (width >= 900px) {
+@media (width >= 1024px) {
   main > .section.narrow > div {
     max-width: calc(960px + 2 * var(--content-padding));
   }

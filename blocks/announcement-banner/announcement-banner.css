@@ -36,7 +36,7 @@ main > .section > .announcement-banner-wrapper {
   font-weight: 700;
 }
 
-@media (width >= 900px) {
+@media (width >= 768px) {
   .announcement-banner {
     font-size: var(--body-font-size-m);
   }

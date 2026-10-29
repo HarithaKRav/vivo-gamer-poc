@@ -54,7 +54,7 @@ main > .section > .whatsapp-wrapper {
   }
 }
 
-@media (width >= 900px) {
+@media (width >= 768px) {
   .whatsapp a.whatsapp-link {
     right: 32px;
   }

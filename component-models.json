@@ -723,7 +723,7 @@
         "component": "select",
         "name": "classes_mobile",
         "label": "Mobile Height",
-        "description": "Vertical space on screens narrower than 900px",
+        "description": "Vertical space on mobile (screens up to 767px wide)",
         "value": "mobile-same",
         "options": [
           {
