@@ -257,6 +257,65 @@ function buildCard(row, labels, id, apps) {
 }
 
 /**
+ * Adds carousel indicator dots for the card list. The dots are only shown while the cards
+ * don't all fit (e.g. on mobile); they show the current card and scroll to a card on click.
+ * @param {Element} list The card list
+ * @returns {Element} The dots list
+ */
+function buildDots(list) {
+  const cards = [...list.children];
+  const dots = createElement('ul', 'pricing-cards-dots');
+  dots.hidden = true;
+  if (cards.length < 2) return dots;
+
+  const offsetOf = (card) => card.getBoundingClientRect().left - list.getBoundingClientRect().left;
+  const buttons = cards.map((card, i) => {
+    const li = createElement('li');
+    const button = createElement('button');
+    button.type = 'button';
+    button.setAttribute('aria-label', `Plano ${i + 1} de ${cards.length}`);
+    button.addEventListener('click', () => {
+      list.scrollTo({ left: list.scrollLeft + offsetOf(card) - 4, behavior: 'smooth' });
+    });
+    li.append(button);
+    dots.append(li);
+    return button;
+  });
+
+  const update = () => {
+    const atEnd = list.scrollLeft + list.clientWidth >= list.scrollWidth - 2;
+    let active = 0;
+    if (atEnd) {
+      active = cards.length - 1;
+    } else {
+      let closest = Infinity;
+      cards.forEach((card, i) => {
+        const distance = Math.abs(offsetOf(card));
+        if (distance < closest) {
+          closest = distance;
+          active = i;
+        }
+      });
+    }
+    buttons.forEach((button, i) => button.setAttribute('aria-current', String(i === active)));
+  };
+
+  let frame;
+  list.addEventListener('scroll', () => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(update);
+  }, { passive: true });
+
+  // show the dots only while the cards overflow the available width
+  const observer = new ResizeObserver(() => {
+    dots.hidden = list.scrollWidth <= list.clientWidth + 1;
+    update();
+  });
+  observer.observe(list);
+  return dots;
+}
+
+/**
  * Finds the Included Apps block for a Pricing Cards block: the one in the same section,
  * otherwise the first one on the page.
  * @param {Element} block The Pricing Cards block
@@ -321,7 +380,7 @@ export default function decorate(block) {
   cardRows.forEach((row, i) => {
     list.append(buildCard(row, labels, `pricing-cards-${instanceCount}-${i + 1}`, apps));
   });
-  content.push(list);
+  content.push(list, buildDots(list));
   if (legacyAppRows.length) content.push(buildLegacyAppsList(legacyAppRows));
 
   block.replaceChildren(...content);

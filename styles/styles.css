@@ -45,8 +45,8 @@
   --heading-font-size-s: 18px;
   --heading-font-size-xs: 16px;
 
-  /* layout */
-  --content-max-width: 1440px;
+  /* layout: below 768px all sections, header and footer are at most 540px wide, centered */
+  --content-max-width: 540px;
   --content-padding: 24px;
 
   /* nav height */
@@ -66,8 +66,9 @@
   src: local('Arial');
 }
 
-@media (width >= 600px) {
+@media (width >= 768px) {
   :root {
+    --content-max-width: 1440px;
     --content-padding: 30px;
   }
 }
@@ -333,12 +334,9 @@ main > .section:first-of-type {
   margin-top: 0;
 }
 
-/* "Narrow" section style: content is at most 540px / 720px / 960px wide on mobile / tablet / desktop */
-main > .section.narrow > div {
-  max-width: calc(540px + 2 * var(--content-padding));
-}
-
-@media (width >= 600px) {
+/* "Narrow" section style: content is at most 720px / 960px wide on tablet / desktop
+   (below 768px all sections are already limited to 540px) */
+@media (width >= 768px) {
   main > .section.narrow > div {
     max-width: calc(720px + 2 * var(--content-padding));
   }

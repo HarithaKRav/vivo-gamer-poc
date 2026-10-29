@@ -21,17 +21,17 @@
   line-height: 1.1;
 }
 
-/* card list: swipeable on mobile, row of cards on desktop */
+/* card list: a row of cards that becomes a swipeable carousel when the cards don't fit */
 .pricing-cards .pricing-cards-list {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
-  margin: 0 calc(-1 * var(--content-padding));
-  padding: 4px var(--content-padding) 16px;
+  gap: 12px;
+  margin: 0 -4px;
+  padding: 4px 4px 16px;
   list-style: none;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scroll-padding: 0 var(--content-padding);
+  scroll-padding: 0 4px;
   scrollbar-width: none;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .pricing-cards .pricing-card {
-  flex: 0 0 min(310px, 85%);
+  flex: 0 0 100%;
   box-sizing: border-box;
   border-radius: 4px;
   background-color: var(--background-color);
@@ -266,6 +266,41 @@
   cursor: pointer;
 }
 
+/* carousel indicator dots, only shown while the cards overflow */
+.pricing-cards .pricing-cards-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pricing-cards .pricing-cards-dots[hidden] {
+  display: none;
+}
+
+.pricing-cards .pricing-cards-dots button {
+  display: block;
+  width: 8px;
+  height: 8px;
+  margin: 0;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  background-color: #d9c2e6;
+  cursor: pointer;
+}
+
+.pricing-cards .pricing-cards-dots button[aria-current='true'] {
+  background-color: var(--vivo-purple);
+}
+
+.pricing-cards .pricing-cards-dots button:focus-visible {
+  outline: 2px solid var(--vivo-purple);
+  outline-offset: 2px;
+}
+
 /* included apps drawer, slides in from the right */
 .pricing-cards .pricing-cards-drawer {
   box-sizing: border-box;
@@ -423,14 +458,6 @@
 @media (width >= 900px) {
   .pricing-cards .pricing-cards-heading {
     margin-bottom: 40px;
-  }
-
-  .pricing-cards .pricing-cards-list {
-    flex-wrap: wrap;
-    gap: 12px;
-    margin: 0;
-    padding: 2px 2px 16px;
-    overflow: visible;
   }
 
   .pricing-cards .pricing-card {

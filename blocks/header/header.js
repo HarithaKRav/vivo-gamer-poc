@@ -160,6 +160,14 @@ export default async function decorate(block) {
     });
   }
 
+  // mobile: tapping the dimmed page around the open menu closes it
+  const header = block.closest('header');
+  header?.addEventListener('click', (e) => {
+    if (e.target === header && !isDesktop.matches && nav.getAttribute('aria-expanded') === 'true') {
+      toggleMenu(nav, navSections, false);
+    }
+  });
+
   // hamburger for mobile
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');
