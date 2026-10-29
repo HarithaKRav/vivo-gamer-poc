@@ -25,31 +25,6 @@ function createIcon(name) {
   return createElement('span', `icon icon-${name}`);
 }
 
-/**
- * Splits a composite multi-field cell into its items.
- * Items with several elements are separated by <hr>, items with a single element are list items.
- * @param {Element} cell The cell element
- * @returns {Element[][]} The elements of each item
- */
-function splitItems(cell) {
-  if (!cell) return [];
-  const list = cell.querySelector(':scope > ul');
-  if (list && cell.children.length === 1) return [...list.children].map((li) => [...li.children]);
-
-  const items = [];
-  let current = [];
-  [...cell.children].forEach((el) => {
-    if (el.tagName === 'HR') {
-      if (current.length) items.push(current);
-      current = [];
-    } else {
-      current.push(el);
-    }
-  });
-  if (current.length) items.push(current);
-  return items;
-}
-
 function getLink(el) {
   return el.tagName === 'A' ? el : el.querySelector('a');
 }
@@ -74,12 +49,17 @@ function parseOption(elements) {
   };
 }
 
-function parseApp(elements) {
-  const picture = elements
-    .map((el) => (el.tagName === 'PICTURE' ? el : el.querySelector('picture')))
-    .find(Boolean);
-  const [name = '', description = ''] = getTexts(elements);
-  return { picture, name, description };
+/**
+ * Reads an Included App row: logo cell, then a cell with name and description.
+ * @param {Element} row The app row
+ */
+function parseApp(row) {
+  const [logoCell, textCell] = [...row.children];
+  const picture = logoCell?.querySelector('picture') || null;
+  const [name = '', description = ''] = textCell ? getTexts([...textCell.children]) : [];
+  return {
+    row, picture, name, description,
+  };
 }
 
 function readLabels(row) {
@@ -106,7 +86,7 @@ function buildHeading(row) {
   return heading;
 }
 
-function buildDrawer(id, title, apps) {
+function buildDrawer(id, title, apps, instrumented) {
   const drawer = createElement('dialog', 'pricing-cards-drawer');
   drawer.setAttribute('aria-labelledby', `${id}-title`);
   const content = createElement('div', 'pricing-cards-drawer-content');
@@ -135,9 +115,13 @@ function buildDrawer(id, title, apps) {
   heading.id = `${id}-title`;
 
   const list = createElement('ul', 'pricing-cards-drawer-apps');
-  apps.forEach(({ picture, name, description }) => {
+  apps.forEach(({
+    row, picture, name, description,
+  }) => {
     const li = createElement('li');
-    if (picture) li.append(picture);
+    // apps are shared by all cards: only the first card's list carries the editor instrumentation
+    if (instrumented) moveInstrumentation(row, li);
+    if (picture) li.append(instrumented ? picture : picture.cloneNode(true));
     const text = createElement('div', 'pricing-cards-drawer-app-text');
     if (name) text.append(createElement('p', 'pricing-cards-drawer-app-name', name));
     if (description) text.append(createElement('p', 'pricing-cards-drawer-app-description', description));
@@ -193,11 +177,12 @@ function buildDetails(id, labels, apps, openDrawer) {
   return details;
 }
 
-function buildCard(row, labels, id) {
-  const [planCell, optionsCell, appsCell] = [...row.children];
+function buildCard(row, labels, id, apps, isFirst) {
+  const [planCell, ...optionCells] = [...row.children];
   const [speed = '', speedDescription = ''] = planCell ? getTexts([...planCell.children]) : [];
-  const options = splitItems(optionsCell).map(parseOption).filter((o) => o.label || o.price);
-  const apps = splitItems(appsCell).map(parseApp).filter((a) => a.picture || a.name);
+  const options = optionCells
+    .map((cell) => parseOption([...cell.children]))
+    .filter((o) => o.label || o.price);
 
   const card = createElement('li', 'pricing-card');
   moveInstrumentation(row, card);
@@ -254,7 +239,7 @@ function buildCard(row, labels, id) {
   card.append(body);
 
   if (apps.length) {
-    const { drawer, openDrawer } = buildDrawer(id, labels.appsDialog, apps);
+    const { drawer, openDrawer } = buildDrawer(id, labels.appsDialog, apps, isFirst);
     const details = buildDetails(id, labels, apps, openDrawer);
 
     const toggle = createElement('button', 'pricing-card-toggle');
@@ -276,16 +261,18 @@ function buildCard(row, labels, id) {
 }
 
 /**
- * Pricing Cards: optional heading, shared labels, and a list of plan cards.
- * Block rows with a single cell hold the heading and the labels,
- * rows with several cells are cards (plan, options, apps).
+ * Pricing Cards: optional heading, shared labels, plan cards and the included apps.
+ * Rows with a single cell hold the heading and the labels, rows with two cells are
+ * included apps (logo, name and description), rows with three or more cells are cards
+ * (plan, option 1, option 2).
  * @param {Element} block The block element
  */
 export default function decorate(block) {
   instanceCount += 1;
   const rows = [...block.children];
   const singleCellRows = rows.filter((row) => row.children.length === 1);
-  const cardRows = rows.filter((row) => row.children.length > 1);
+  const appRows = rows.filter((row) => row.children.length === 2);
+  const cardRows = rows.filter((row) => row.children.length > 2);
 
   let headingRow;
   let labelsRow;
@@ -298,12 +285,15 @@ export default function decorate(block) {
   }
 
   const labels = readLabels(labelsRow);
+  // keep new, still empty apps in the Universal Editor so authors can select and complete them
+  const apps = appRows.map(parseApp)
+    .filter((app) => app.picture || app.name || app.row.hasAttribute('data-aue-resource'));
   const content = [];
   if (headingRow && headingRow.textContent.trim()) content.push(buildHeading(headingRow));
 
   const list = createElement('ul', 'pricing-cards-list');
   cardRows.forEach((row, i) => {
-    list.append(buildCard(row, labels, `pricing-cards-${instanceCount}-${i + 1}`));
+    list.append(buildCard(row, labels, `pricing-cards-${instanceCount}-${i + 1}`, apps, i === 0));
   });
   content.push(list);
 

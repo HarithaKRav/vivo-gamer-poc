@@ -519,95 +519,119 @@
         "description": "e.g. de internet com Wi-Fi grátis"
       },
       {
-        "component": "container",
-        "name": "options",
-        "label": "Plan Options",
-        "description": "Each option becomes a radio button. The first option is selected by default.",
-        "collapsible": true,
-        "multi": true,
-        "fields": [
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "planName",
-            "label": "Card Title (when selected)",
-            "description": "e.g. Vivo Fibra Gamer",
-            "required": true
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "label",
-            "label": "Option Label",
-            "description": "e.g. Fibra Gamer",
-            "required": true
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "price",
-            "label": "Price",
-            "description": "e.g. R$ 170/mês",
-            "required": true
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "details",
-            "label": "Option Details (optional)",
-            "description": "e.g. + Exitlag e ponto cabeado incluso"
-          },
-          {
-            "component": "aem-content",
-            "name": "link",
-            "label": "Checkout URL",
-            "required": true
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "linkText",
-            "label": "Button Label",
-            "value": "Consultar Fibra"
-          }
-        ]
+        "component": "text",
+        "valueType": "string",
+        "name": "option1_name",
+        "label": "Option 1: Card Title",
+        "description": "Card title while this option is selected, e.g. Vivo Fibra Gamer",
+        "required": true
       },
       {
-        "component": "container",
-        "name": "apps",
-        "label": "Included Apps",
-        "description": "The first 3 logos are shown in the card; all apps are listed in the pop-up.",
-        "collapsible": true,
-        "multi": true,
-        "fields": [
-          {
-            "component": "reference",
-            "valueType": "string",
-            "name": "image",
-            "label": "App Logo",
-            "multi": false,
-            "required": true
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "imageAlt",
-            "label": "App Logo Alt Text"
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "appName",
-            "label": "App Name",
-            "required": true
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "appDescription",
-            "label": "App Description"
-          }
-        ]
+        "component": "text",
+        "valueType": "string",
+        "name": "option1_label",
+        "label": "Option 1: Label",
+        "description": "Radio button label, e.g. Fibra Gamer",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option1_price",
+        "label": "Option 1: Price",
+        "description": "e.g. R$ 170/mês",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option1_details",
+        "label": "Option 1: Details (optional)",
+        "description": "e.g. + Exitlag e ponto cabeado incluso"
+      },
+      {
+        "component": "aem-content",
+        "name": "option1_link",
+        "label": "Option 1: Checkout URL",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option1_linkText",
+        "label": "Option 1: Button Label",
+        "value": "Consultar Fibra"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option2_name",
+        "label": "Option 2: Card Title",
+        "description": "Card title while this option is selected, e.g. Vivo Fibra Gamer"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option2_label",
+        "label": "Option 2: Label",
+        "description": "Radio button label, e.g. Fibra Gamer"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option2_price",
+        "label": "Option 2: Price",
+        "description": "e.g. R$ 170/mês"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option2_details",
+        "label": "Option 2: Details (optional)",
+        "description": "e.g. + Exitlag e ponto cabeado incluso"
+      },
+      {
+        "component": "aem-content",
+        "name": "option2_link",
+        "label": "Option 2: Checkout URL"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option2_linkText",
+        "label": "Option 2: Button Label",
+        "value": "Consultar Fibra"
+      }
+    ]
+  },
+  {
+    "id": "pricing-card-app",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "App Logo",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "App Logo Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "app_name",
+        "label": "App Name",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "app_description",
+        "label": "App Description"
       }
     ]
   },

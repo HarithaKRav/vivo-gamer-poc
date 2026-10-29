@@ -310,7 +310,29 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "name": "Pricing Card",
-                  "model": "pricing-card"
+                  "model": "pricing-card",
+                  "option1_name": "Vivo Fibra Gamer",
+                  "option1_label": "Fibra Gamer",
+                  "option1_details": "+ Exitlag e ponto cabeado incluso",
+                  "option1_linkText": "Consultar Fibra",
+                  "option2_name": "Vivo Fibra",
+                  "option2_label": "Vivo Fibra",
+                  "option2_linkText": "Consultar Fibra"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Included App",
+          "id": "pricing-card-app",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Included App",
+                  "model": "pricing-card-app"
                 }
               }
             }

@@ -62,7 +62,8 @@
   {
     "id": "pricing-cards",
     "components": [
-      "pricing-card"
+      "pricing-card",
+      "pricing-card-app"
     ]
   }
 ]
