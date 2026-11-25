@@ -1,0 +1,22 @@
+.legal-disclaimer {
+  color: var(--text-secondary-color);
+  font-size: var(--body-font-size-s);
+  line-height: 18px;
+}
+
+.legal-disclaimer p {
+  margin: 0 0 8px;
+}
+
+.legal-disclaimer a:any-link {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.legal-disclaimer a:hover {
+  color: var(--vivo-purple);
+}
+
+main > .section > .legal-disclaimer-wrapper:not(:first-child) {
+  margin-top: 32px;
+}

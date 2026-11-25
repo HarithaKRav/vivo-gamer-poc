@@ -1,0 +1,131 @@
+{
+  "definitions": [
+    {
+      "title": "Spacer",
+      "id": "spacer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Spacer",
+              "model": "spacer",
+              "classes_height": "height-40",
+              "classes_mobile": "mobile-same"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "spacer",
+      "fields": [
+        {
+          "component": "select",
+          "name": "classes_height",
+          "label": "Height",
+          "description": "Vertical space on desktop (and on mobile, unless set below)",
+          "value": "height-40",
+          "options": [
+            {
+              "name": "0px",
+              "value": "height-0"
+            },
+            {
+              "name": "8px",
+              "value": "height-8"
+            },
+            {
+              "name": "16px",
+              "value": "height-16"
+            },
+            {
+              "name": "24px",
+              "value": "height-24"
+            },
+            {
+              "name": "32px",
+              "value": "height-32"
+            },
+            {
+              "name": "40px",
+              "value": "height-40"
+            },
+            {
+              "name": "48px",
+              "value": "height-48"
+            },
+            {
+              "name": "64px",
+              "value": "height-64"
+            },
+            {
+              "name": "80px",
+              "value": "height-80"
+            },
+            {
+              "name": "120px",
+              "value": "height-120"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "classes_mobile",
+          "label": "Mobile Height",
+          "description": "Vertical space on mobile (screens up to 767px wide)",
+          "value": "mobile-same",
+          "options": [
+            {
+              "name": "Same as desktop",
+              "value": "mobile-same"
+            },
+            {
+              "name": "0px",
+              "value": "mobile-0"
+            },
+            {
+              "name": "8px",
+              "value": "mobile-8"
+            },
+            {
+              "name": "16px",
+              "value": "mobile-16"
+            },
+            {
+              "name": "24px",
+              "value": "mobile-24"
+            },
+            {
+              "name": "32px",
+              "value": "mobile-32"
+            },
+            {
+              "name": "40px",
+              "value": "mobile-40"
+            },
+            {
+              "name": "48px",
+              "value": "mobile-48"
+            },
+            {
+              "name": "64px",
+              "value": "mobile-64"
+            },
+            {
+              "name": "80px",
+              "value": "mobile-80"
+            },
+            {
+              "name": "120px",
+              "value": "mobile-120"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

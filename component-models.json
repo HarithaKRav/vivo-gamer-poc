@@ -129,6 +129,12 @@
         "description": "The label shown for this section in the Content Tree"
       },
       {
+        "component": "text",
+        "name": "anchor",
+        "label": "Anchor ID",
+        "description": "Optional ID used for same-page links, e.g. 'ofertas' for a link to #ofertas"
+      },
+      {
         "component": "multiselect",
         "name": "style",
         "label": "Style",
@@ -136,8 +142,39 @@
           {
             "name": "Highlight",
             "value": "highlight"
+          },
+          {
+            "name": "Narrow (960px desktop / 720px tablet)",
+            "value": "narrow"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "announcement-banner",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Icon Alt Text",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "label": "Text",
+        "value": "",
+        "description": "Use bold for the highlighted lead-in, e.g. 'Imperdível:'"
       }
     ]
   },
@@ -161,6 +198,34 @@
     ]
   },
   {
+    "id": "chat-button",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Chat URL",
+        "description": "Page loaded in the side drawer, e.g. https://plataforma.portal.vivo.com.br/chat/fibra/",
+        "required": true
+      },
+      {
+        "component": "text-area",
+        "valueType": "string",
+        "name": "hoverLabel",
+        "label": "Hover Text",
+        "description": "Shown next to the icon on hover. Press Enter for a line break.",
+        "value": "Compre com um consultor online"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Accessible Label",
+        "description": "Read by screen readers and used as the drawer title",
+        "value": "Compre com um consultor online"
+      }
+    ]
+  },
+  {
     "id": "columns",
     "fields": [
       {
@@ -180,12 +245,117 @@
     ]
   },
   {
+    "id": "cta-bar",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Label",
+        "value": "Assinar agora"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "phone",
+        "label": "Phone Number",
+        "description": "Shown on the button and dialled on click, e.g. 0800 999 1010",
+        "required": true
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link (optional)",
+        "description": "If set, the button opens this page instead of calling the phone number"
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
         "component": "aem-content",
         "name": "reference",
         "label": "Reference"
+      }
+    ]
+  },
+  {
+    "id": "hero-banner",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Campaign Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Campaign Image Alt Text",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading_eyebrow",
+        "label": "Eyebrow",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading_title",
+        "label": "Heading",
+        "value": ""
+      },
+      {
+        "component": "select",
+        "name": "heading_titleType",
+        "label": "Heading Type",
+        "value": "h2",
+        "options": [
+          {
+            "name": "H1",
+            "value": "h1"
+          },
+          {
+            "name": "H2",
+            "value": "h2"
+          },
+          {
+            "name": "H3",
+            "value": "h3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hero-banner-benefit",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Icon Alt Text",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "text",
+        "label": "Benefit Text",
+        "value": ""
       }
     ]
   },
@@ -212,6 +382,431 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "included-app",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "App Logo",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "App Logo Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "app_name",
+        "label": "App Name",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "app_description",
+        "label": "App Description"
+      }
+    ]
+  },
+  {
+    "id": "legal-disclaimer",
+    "fields": [
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "label": "Legal Text",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "link-list-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link",
+        "description": "Page, PDF or external URL. PDFs and external links open in a new tab.",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "linkText",
+        "label": "Text",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "linkTitle",
+        "label": "Title (tooltip)"
+      }
+    ]
+  },
+  {
+    "id": "partner-promo",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Partner Logo",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Partner Logo Alt Text",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "label": "Description",
+        "value": "",
+        "description": "First paragraph is the headline, following paragraphs are supporting text"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "linkText",
+        "label": "CTA Label",
+        "value": "Assinar agora"
+      }
+    ]
+  },
+  {
+    "id": "pricing-cards",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading_eyebrow",
+        "label": "Eyebrow",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading_title",
+        "label": "Heading",
+        "value": ""
+      },
+      {
+        "component": "select",
+        "name": "heading_titleType",
+        "label": "Heading Type",
+        "value": "h1",
+        "options": [
+          {
+            "name": "H1",
+            "value": "h1"
+          },
+          {
+            "name": "H2",
+            "value": "h2"
+          },
+          {
+            "name": "H3",
+            "value": "h3"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "labels_details",
+        "label": "'More details' Button Label",
+        "value": "Mais detalhes",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "labels_appsHeading",
+        "label": "Included Apps Heading",
+        "value": "Serviços digitais inclusos:",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "labels_appsLink",
+        "label": "'Check apps' Link Label",
+        "value": "Conferir apps",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "labels_appsDialog",
+        "label": "Apps Pop-up Heading",
+        "value": "Apps inclusos nos planos de internet Vivo Fibra Gamer",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "pricing-card",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "plan_speed",
+        "label": "Speed",
+        "description": "e.g. 700 Mega",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "plan_speedDescription",
+        "label": "Speed Description",
+        "description": "e.g. de internet com Wi-Fi grátis"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option1_name",
+        "label": "Option 1: Card Title",
+        "description": "Card title while this option is selected, e.g. Vivo Fibra Gamer",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option1_label",
+        "label": "Option 1: Label",
+        "description": "Radio button label, e.g. Fibra Gamer",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option1_price",
+        "label": "Option 1: Price",
+        "description": "e.g. R$ 170/mês",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option1_details",
+        "label": "Option 1: Details (optional)",
+        "description": "e.g. + Exitlag e ponto cabeado incluso"
+      },
+      {
+        "component": "aem-content",
+        "name": "option1_link",
+        "label": "Option 1: Checkout URL",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option1_linkText",
+        "label": "Option 1: Button Label",
+        "value": "Consultar Fibra"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option2_name",
+        "label": "Option 2: Card Title",
+        "description": "Card title while this option is selected, e.g. Vivo Fibra Gamer"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option2_label",
+        "label": "Option 2: Label",
+        "description": "Radio button label, e.g. Fibra Gamer"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option2_price",
+        "label": "Option 2: Price",
+        "description": "e.g. R$ 170/mês"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option2_details",
+        "label": "Option 2: Details (optional)",
+        "description": "e.g. + Exitlag e ponto cabeado incluso"
+      },
+      {
+        "component": "aem-content",
+        "name": "option2_link",
+        "label": "Option 2: Checkout URL"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "option2_linkText",
+        "label": "Option 2: Button Label",
+        "value": "Consultar Fibra"
+      }
+    ]
+  },
+  {
+    "id": "spacer",
+    "fields": [
+      {
+        "component": "select",
+        "name": "classes_height",
+        "label": "Height",
+        "description": "Vertical space on desktop (and on mobile, unless set below)",
+        "value": "height-40",
+        "options": [
+          {
+            "name": "0px",
+            "value": "height-0"
+          },
+          {
+            "name": "8px",
+            "value": "height-8"
+          },
+          {
+            "name": "16px",
+            "value": "height-16"
+          },
+          {
+            "name": "24px",
+            "value": "height-24"
+          },
+          {
+            "name": "32px",
+            "value": "height-32"
+          },
+          {
+            "name": "40px",
+            "value": "height-40"
+          },
+          {
+            "name": "48px",
+            "value": "height-48"
+          },
+          {
+            "name": "64px",
+            "value": "height-64"
+          },
+          {
+            "name": "80px",
+            "value": "height-80"
+          },
+          {
+            "name": "120px",
+            "value": "height-120"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "classes_mobile",
+        "label": "Mobile Height",
+        "description": "Vertical space on mobile (screens up to 767px wide)",
+        "value": "mobile-same",
+        "options": [
+          {
+            "name": "Same as desktop",
+            "value": "mobile-same"
+          },
+          {
+            "name": "0px",
+            "value": "mobile-0"
+          },
+          {
+            "name": "8px",
+            "value": "mobile-8"
+          },
+          {
+            "name": "16px",
+            "value": "mobile-16"
+          },
+          {
+            "name": "24px",
+            "value": "mobile-24"
+          },
+          {
+            "name": "32px",
+            "value": "mobile-32"
+          },
+          {
+            "name": "40px",
+            "value": "mobile-40"
+          },
+          {
+            "name": "48px",
+            "value": "mobile-48"
+          },
+          {
+            "name": "64px",
+            "value": "mobile-64"
+          },
+          {
+            "name": "80px",
+            "value": "mobile-80"
+          },
+          {
+            "name": "120px",
+            "value": "mobile-120"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "whatsapp",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "phone",
+        "label": "WhatsApp Number",
+        "description": "Include country code, digits only, e.g. 558008002006",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "message",
+        "label": "Pre-filled Message",
+        "description": "Text placed in the chat when it opens, e.g. Gostaria de contratar planos Fibra Gamer!"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Accessible Label",
+        "description": "Read by screen readers, e.g. Fale conosco pelo WhatsApp",
+        "value": "Fale conosco pelo WhatsApp"
+      },
+      {
+        "component": "text-area",
+        "valueType": "string",
+        "name": "hoverLabel",
+        "label": "Hover Text",
+        "description": "Shown next to the icon on hover. Press Enter for a line break, e.g. Compre direto / pelo WhatsApp",
+        "value": "Compre direto\npelo WhatsApp"
       }
     ]
   }
