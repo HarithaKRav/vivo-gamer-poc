@@ -1,2 +1,5 @@
-   mountpoints:
-     /: https://author-p123615-e2372591.adobeaemcloud.com/bin/franklin.delivery/HarithaKRav/vivo-gamer-poc/main
+mountpoints:
+  /:
+    url: https://author-p123615-e2372591.adobeaemcloud.com/bin/franklin.delivery/HarithaKRav/vivo-gamer-poc/main
+    type: markup
+    suffix: .html
