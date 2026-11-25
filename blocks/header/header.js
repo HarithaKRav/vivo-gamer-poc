@@ -2,7 +2,7 @@ import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 // media query match that indicates mobile/tablet width
-const isDesktop = window.matchMedia('(min-width: 900px)');
+const isDesktop = window.matchMedia('(min-width: 768px)');
 
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
@@ -150,6 +150,23 @@ export default async function decorate(block) {
       });
     });
   }
+
+  // same-page anchor links: close the mobile menu after navigating
+  if (navSections) {
+    navSections.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (!isDesktop.matches) toggleMenu(nav, navSections, false);
+      });
+    });
+  }
+
+  // mobile: tapping the dimmed page around the open menu closes it
+  const header = block.closest('header');
+  header?.addEventListener('click', (e) => {
+    if (e.target === header && !isDesktop.matches && nav.getAttribute('aria-expanded') === 'true') {
+      toggleMenu(nav, navSections, false);
+    }
+  });
 
   // hamburger for mobile
   const hamburger = document.createElement('div');

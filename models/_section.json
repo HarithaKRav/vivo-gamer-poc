@@ -26,6 +26,12 @@
           "description": "The label shown for this section in the Content Tree"
         },
         {
+          "component": "text",
+          "name": "anchor",
+          "label": "Anchor ID",
+          "description": "Optional ID used for same-page links, e.g. 'ofertas' for a link to #ofertas"
+        },
+        {
           "component": "multiselect",
           "name": "style",
           "label": "Style",
@@ -33,6 +39,10 @@
             {
               "name": "Highlight",
               "value": "highlight"
+            },
+            {
+              "name": "Narrow (960px desktop / 720px tablet)",
+              "value": "narrow"
             }
           ]
         }
@@ -50,7 +60,18 @@
         "hero",
         "cards",
         "columns",
-        "fragment"
+        "fragment",
+        "announcement-banner",
+        "pricing-cards",
+        "included-apps",
+        "link-list",
+        "hero-banner",
+        "partner-promo",
+        "legal-disclaimer",
+        "cta-bar",
+        "whatsapp",
+        "chat-button",
+        "spacer"
       ]
     }
   ]

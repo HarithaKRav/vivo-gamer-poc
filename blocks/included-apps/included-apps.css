@@ -1,0 +1,46 @@
+/* the apps are shown inside the pricing cards, the block itself only in the Universal Editor */
+.included-apps {
+  display: none;
+}
+
+.included-apps[data-aue-resource] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  min-height: 24px;
+  border: 1px dashed var(--border-color);
+  padding: 12px 16px;
+  font-size: var(--body-font-size-xs);
+}
+
+.included-apps[data-aue-resource]::before {
+  content: 'Included Apps (shown in the pricing cards, edited here):';
+  flex-basis: 100%;
+  color: var(--text-secondary-color);
+}
+
+.included-apps .included-apps-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 48px;
+  min-height: 24px;
+}
+
+.included-apps .included-apps-logo picture,
+.included-apps .included-apps-logo img {
+  display: block;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.included-apps .included-apps-text p {
+  margin: 0;
+}
+
+/* show only the app name in the editor list */
+.included-apps .included-apps-text p + p {
+  display: none;
+}
