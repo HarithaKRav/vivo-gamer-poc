@@ -39,7 +39,7 @@
           "valueType": "string",
           "name": "text",
           "label": "Text",
-          "value": "",
+          "value": "--",
           "description": "Use bold for the highlighted lead-in, e.g. 'Imperdível:'"
         }
       ]
